@@ -1,6 +1,7 @@
 package edu.csupomona.cs480.controller;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,6 +51,17 @@ public class WebController {
 		// and run the application locally to check your changes
 		// with the URL: http://localhost:8080/
 		return "OK";
+	}
+
+	/**
+	 * @author Wai Phyo (William)
+	 *
+	 * Simple function to return random number
+	 * @return random number
+	 */
+	@RequestMapping(value = "/SoundNeat/Random", method = RequestMethod.GET)
+	int getRandomNumber(){
+		return (new Random()).nextInt();
 	}
 
 	/**
