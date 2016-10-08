@@ -79,11 +79,11 @@ public class WebController {
 	}
 
 	/**
-	 * @author Ben Chin
+	 * @author Jonathan Fetzer
 	 *
 	 * A simple function to compare relative danger level of two locations
-	 * @param String location
-	 * @return danger level (0 to 4 inclusive)
+	 * @param String cityA, cityB
+	 * @return int to indicate whether cityA danger > cityB danger
 	 */
 	@RequestMapping(value = "/SoundsNeat/Danger/{cityA, cityB}", method = RequestMethod.GET)
 	int compare(@PathVariable("cityA") String cityA, @PathVariable("cityB") String cityB){
