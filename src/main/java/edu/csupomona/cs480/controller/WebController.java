@@ -37,6 +37,8 @@ public class WebController {
 	 */
 	@Autowired
 	private UserManager userManager;
+	@Autowired
+	private Random random;
 
 	/**
 	 * This is a simple example of how the HTTP API works.
@@ -59,9 +61,21 @@ public class WebController {
 	 * Simple function to return random number
 	 * @return random number
 	 */
-	@RequestMapping(value = "/SoundNeat/Random", method = RequestMethod.GET)
+	@RequestMapping(value = "/SoundsNeat/Random", method = RequestMethod.GET)
 	int getRandomNumber(){
-		return (new Random()).nextInt();
+		return random.nextInt();
+	}
+
+	/**
+	 * @author Ben Chin
+	 *
+	 * A simple function to return the danger level of a given location
+	 * @param String location
+	 * @return danger level (0 to 4 inclusive)
+	 */
+	@RequestMapping(value = "/SoundsNeat/Danger/{location}", method = RequestMethod.GET)
+	int getDangerLevel(@PathVariable("location") String location){
+		return random.nextInt(5);
 	}
 
 	/**
