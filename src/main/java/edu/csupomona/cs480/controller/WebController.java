@@ -37,6 +37,8 @@ public class WebController {
 	 */
 	@Autowired
 	private UserManager userManager;
+	@Autowired
+	private Random random;
 
 	/**
 	 * This is a simple example of how the HTTP API works.
@@ -59,11 +61,41 @@ public class WebController {
 	 * Simple function to return random number
 	 * @return random number
 	 */
-	@RequestMapping(value = "/SoundNeat/Random", method = RequestMethod.GET)
+	@RequestMapping(value = "/SoundsNeat/Random", method = RequestMethod.GET)
 	int getRandomNumber(){
-		return (new Random()).nextInt();
+		return random.nextInt();
 	}
 
+	/**
+	 * @author Ben Chin
+	 *
+	 * A simple function to return the danger level of a given location
+	 * @param String location
+	 * @return danger level (0 to 4 inclusive)
+	 */
+	@RequestMapping(value = "/SoundsNeat/Danger/{location}", method = RequestMethod.GET)
+	int getDangerLevel(@PathVariable("location") String location){
+		return random.nextInt(5);
+	}
+
+	/**
+	 * @author Ben Chin
+	 *
+	 * A simple function to compare relative danger level of two locations
+	 * @param String location
+	 * @return danger level (0 to 4 inclusive)
+	 */
+	@RequestMapping(value = "/SoundsNeat/Danger/{cityA, cityB}", method = RequestMethod.GET)
+	int compare(@PathVariable("cityA") String cityA, @PathVariable("cityB") String cityB){
+		int cityADanger = getDangerLevel(cityA);
+		int cityBDanger = getDangerLevel(cityB);
+		if(cityADanger > cityBDanger) {
+			return  1;
+		} else if(cityADanger < cityBDanger) {
+			return  -1;
+		} else return 0;
+	}
+	
 	/**
 	 * This is a simple example of how to use a data manager
 	 * to retrieve the data and return it as an HTTP response.
