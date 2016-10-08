@@ -26,6 +26,11 @@ public class App {
         return userManager;
     }
 
+    @Bean
+    public Random random() {
+		return new Random();
+    }
+
     /**
      * This is the running main method for the web application.
      * Please note that Spring requires that there is one and
