@@ -37,7 +37,7 @@ public class WebController {
 	 */
 	@Autowired
 	private UserManager userManager;
-	@Autowired
+	
 	private Random random;
 
 	/**
