@@ -1,8 +1,13 @@
 package edu.csupomona.cs480.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -174,6 +179,13 @@ public class WebController {
 		ModelAndView modelAndView = new ModelAndView("home");
 		modelAndView.addObject("users", listAllUsers());
 		return modelAndView;
+	}
+
+	@RequestMapping(value = "/480/manga", method = RequestMethod.GET)
+	String readKingDomManga() throws IOException {
+		Document doc = Jsoup.connect("http://www.mangareader.net/kingdom/1").get();
+		String title = doc.title();
+		return title;
 	}
 
 }
