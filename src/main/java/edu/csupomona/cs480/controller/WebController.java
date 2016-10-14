@@ -4,10 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.commons.math3.util.MathArrays;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,7 +69,6 @@ public class WebController {
 	int getRandomNumber(){
 		return random.nextInt();
 	}
-
 	/**
 	 * @author Ben Chin
 	 *
@@ -187,5 +185,19 @@ public class WebController {
 		String title = doc.title();
 		return title;
 	}
+
+    /**
+     * @author Connor
+     *
+     * Simple function that uses Commons Math3
+     * finds the total distance between all the elements in two arrays
+     */
+    @RequestMapping(value = "/480/M_A_T_H_B_O_Y_S", method = RequestMethod.GET)
+    int commonsMath() {
+        int [] point1 = {12,18,12,50,7};
+        int [] point2 = {50,25,12,13,8};
+        return MathArrays.distance1(point1, point2);
+    }
+
 
 }
