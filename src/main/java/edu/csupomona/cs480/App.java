@@ -1,13 +1,14 @@
 package edu.csupomona.cs480;
 
+import edu.csupomona.cs480.data.provider.*;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import edu.csupomona.cs480.data.provider.FSUserManager;
-import edu.csupomona.cs480.data.provider.UserManager;
+import java.util.Random;
 
 @Configuration
 @EnableAutoConfiguration
@@ -24,6 +25,11 @@ public class App {
     public UserManager userManager() {
         UserManager userManager = new FSUserManager();
         return userManager;
+    }
+
+    @Bean
+    public Random random() {
+		return new Random();
     }
 
     /**
