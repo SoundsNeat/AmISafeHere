@@ -73,7 +73,7 @@
             <artifactId>commons-math3</artifactId>
             <version>3.6.1</version>
         </dependency>
->>>>>>> 76ceeeee9c7261c3e560d7dd2a21ab533e1568d4
+
 	</dependencies>
 
 	<build>
