@@ -8,11 +8,7 @@ import org.apache.commons.math3.util.MathArrays;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.csupomona.cs480.App;
@@ -179,9 +175,15 @@ public class WebController {
 		return modelAndView;
 	}
 
+	@RequestMapping(value = "/getTest", method = RequestMethod.GET)
+	String returnParam(@RequestParam("test") String test) {
+		return test;
+	}
+
 	@RequestMapping(value = "/480/manga", method = RequestMethod.GET)
-	String readKingDomManga() throws IOException {
-		Document doc = Jsoup.connect("http://www.mangareader.net/kingdom/1").get();
+	public @ResponseBody
+	String readKingDomManga(@RequestParam("website")final String website, @RequestParam("name")final String name) throws IOException {
+		Document doc = Jsoup.connect(new StringBuilder().append("http://").append(website).append("/").append(name).append("/1").toString()).get();
 		String title = doc.title();
 		return title;
 	}
