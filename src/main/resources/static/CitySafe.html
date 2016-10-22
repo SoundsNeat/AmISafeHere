@@ -89,7 +89,7 @@
                     <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-2">
                         <h4 class="brand-heading">Let's find out! </h4>
                         <button class="btn-success btn-lg btn-block"
-                                data-toggle="modal" data-target="#resultModal"
+
                                 ng-click="SearchCityWithCoordinates()">
                             <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
                             Get My Location
@@ -119,22 +119,19 @@
         </div>
     </header>
 
-    <div id="addressIsHere" style="display:block" ></div>
+    <div id="addressIsHere" style="display:none;" ></div>
 
     <!-- Modal -->
     <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                     <h4 class="modal-title" id="myModalLabel">Search Results</h4>
                 </div>
-                <div class="modal-body">
-                    <p>
-                        call javascript function getLocation() to get the latitudes, longitudes.
-                        Call server to get the data.
-                        Display Data
-                    </p>
+                <div class="modal-body" id="resultModalBody">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

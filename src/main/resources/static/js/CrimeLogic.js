@@ -13,3 +13,11 @@ function coordToCity(lat, long) {
 function reformatAddress(address) {
     return address.replace(/, /g,"-").replace(/ /g,"_");
 }
+
+
+function loadModal(content) {
+    $('#resultModalBody').empty();
+    $('#resultModalBody').append(content);
+    $('#resultModal').modal({show:true});
+
+}
