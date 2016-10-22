@@ -2,7 +2,7 @@ var amISafeHere = angular.module('AmISafeHere', []);
 
 amISafeHere.controller('CityCtrl', function ($scope, $http) {
     $scope.SearchCityWithCoordinates = function () {
-        var content;
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var location = reformatAddress(coordToCity(position.coords.latitude, position.coords.longitude));
@@ -10,21 +10,17 @@ amISafeHere.controller('CityCtrl', function ($scope, $http) {
                 .success(function(data){
                     console.info(data.city);
                     console.info(data.state);
-                    content = "<h3>" + data.city + ", " + data.state + "</h3>";
-                    loadModal(content);
+                    loadModal(parseOutput(data));
                 })
                 .error(function(data){
                     console.error('fail');
-                    content = "<p>Error connecting to server. <br />Please try again later. </p>";
-                    loadModal(content);
+                    loadModal(parseServerConnectError());
                 });
             });
         } else {
             console.error("Unable to access your current locaitons.\nPlease use the search box.");
-            content = "<p>Unable to access your current locaitons.<br/>Please use the search box.</p>";
-            loadModal(content);
+            loadModal(parseNoGpsError());
         }
-        //loadModal(content);
     }
 
     $scope.SearchCityWithAddress = function () {
@@ -32,9 +28,11 @@ amISafeHere.controller('CityCtrl', function ($scope, $http) {
             .success(function(data){
                 console.info(data.city);
                 console.info(data.state);
+                loadModal(parseOutput(data));
             })
             .error(function(data){
                 console.error('fail');
+                loadModal(parseServerConnectError());
             });
     }
 });

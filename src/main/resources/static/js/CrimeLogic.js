@@ -19,5 +19,19 @@ function loadModal(content) {
     $('#resultModalBody').empty();
     $('#resultModalBody').append(content);
     $('#resultModal').modal({show:true});
+}
 
+function parseServerConnectError() {
+    return "<div class=\"has-error\"><p>Error connecting to server. <br />Please try again later. </p></div>";
+}
+
+function parseNoGpsError() {
+    return "<div class=\"has-error\"><p>Unable to access your current locaitons.<br/>Please use the search box.</p></div>";
+}
+
+
+function parseOutput(data) {
+    var content;
+    content = "<h3>" + data.city + ", " + data.state + "</h3>";
+    return content;
 }
