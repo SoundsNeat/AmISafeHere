@@ -1,4 +1,8 @@
 package edu.csupomona.cs480.util;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * 
  * @author Jonathan T. Fetzer
@@ -8,16 +12,11 @@ package edu.csupomona.cs480.util;
  */
 
 public class CrimeStats {	
+
+	private String city;
+	private String state;
 	
-	private float[] murderStats;
-	private float[] rapeStats;
-	private float[] robberyStats;
-	private float[] assaultStats;
-	private float[] burglaryStats;
-	private float[] theftStats;
-	private float[] autoTheftStats;
-	private float[] arsonStats;
-	private float[] crimeDataIndex;
+	private int amISafeIndex; // takes on values 1 through 5 with 3 being the baseline (e.g. state or national average).
 	
 	private int[] crimeDataYears;
 	private int[] numMurders;
@@ -29,8 +28,15 @@ public class CrimeStats {
 	private int[] numAutoThefts;
 	private int[] numArsons;
 	
-	private String city;
-	private String state;
+	private float[] murderStats;
+	private float[] rapeStats;
+	private float[] robberyStats;
+	private float[] assaultStats;
+	private float[] burglaryStats;
+	private float[] theftStats;
+	private float[] autoTheftStats;
+	private float[] arsonStats;
+	private float[] crimeDataIndex;
 	
 	CrimeStats(String city, String state){
 		this.city = city;
@@ -206,7 +212,7 @@ public class CrimeStats {
 		this.arsonStats = arsonStats;
 	}
 
-	public float[] getCrimeDataStats() {
+	public float[] getCrimeDataIndex() {
 		return crimeDataIndex;
 	}
 
@@ -220,6 +226,14 @@ public class CrimeStats {
 	}
 	public void setCrimeDataIndex(float[] crimeDataIndex) {
 		this.crimeDataIndex = crimeDataIndex;
+	}
+	
+	public int getAmISafeIndex() {
+		return amISafeIndex;
+	}
+
+	public void setAmISafeIndex() {
+		// calculate amISafeIndex using crimeDataIndex
 	}
 	
 	public static void print(int[] param){
@@ -373,4 +387,16 @@ public class CrimeStats {
 	public void setNumArsons(int[] numArsons) {
 		this.numArsons = numArsons;
 	}
+	
+	public String toJson(){
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = null;
+		try {
+			jsonString = mapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return jsonString;
+	} // end method toJson
 }

@@ -9,30 +9,47 @@ package edu.csupomona.cs480.util;
 
 import java.io.IOException;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class CreateCrimeStatsTest {
 
 	public static void main(String[] args) throws Exception {
+		boolean JSON = true; // example input: {"city":"Pomona","state":"California"}
 		CreateCrimeStats cityA = null;
-		
-		if(args.length < 2) {
-			//commented out to test w/o args
-			//throw new Exception("must provide city and state as arguments, e.g. Pomona California");
-			args = new String[2];
-			args[0] = "Pomona";
-			args[1] = "California";
-		} else if(args.length > 2){ // for inputs such as Los Angeles California
-			int i;
-			for (i = 1; i < args.length - 1; i++) {
-				args[0] = args[0] + " " + args[i];
-			} // end for i
-			args[1] = args[i];
-		} 
-		try {
-			cityA = new CreateCrimeStats(args[0], args[1]);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} // end catch
 
+		if(JSON){
+			ObjectMapper mapper = new ObjectMapper();
+	//		replaceAll method prevents mapper.readValue from stripping quotation marks out of JSON format.
+			CityState cityState = mapper.readValue((args[0].replaceAll("\"", "\\\"")), CityState.class);
+			try {
+				cityA = new CreateCrimeStats(cityState.city, cityState.state);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} // end catch
+		} else { // example input: Pomona California
+			if(args.length < 2) {
+				//commented out to test w/o args
+				//throw new Exception("must provide city and state as arguments, e.g. Pomona California");
+				args = new String[2];
+				args[0] = "Pomona";
+				args[1] = "California";
+			} else if(args.length > 2){ // for inputs such as Los Angeles California
+				int i;
+				for (i = 1; i < args.length - 1; i++) {
+					args[0] = args[0] + " " + args[i];
+				} // end for i
+				args[1] = args[i];
+				try {
+					cityA = new CreateCrimeStats(args[0], args[1]);
+				} catch (IOException e) {
+					e.printStackTrace();
+				} // end catch
+			} // end else if
+		} // end else
+		
+		System.out.println("JSON: " + cityA.crimeStats.toJson()+ "\n");
+		
+		/*
 		// print crime data years
     	System.out.print("Crime data years for " + args[0] + ", " + args[1] + ": ");
     	CrimeStats.print(cityA.crimeStats.getCrimeDataYears());
@@ -51,6 +68,7 @@ public class CreateCrimeStatsTest {
     	System.out.print("Number of rapes per year: ");
     	CrimeStats.print(cityA.crimeStats.getNumRapes());
     	
+    	// Print rate stats
        	System.out.print("Number of rapes per year per 100,000: ");
        	CrimeStats.print(cityA.crimeStats.getRapeStats());
        	System.out.println();
@@ -108,7 +126,9 @@ public class CreateCrimeStatsTest {
        // Print Auto Theft stats
        	System.out.print("Number of incidents of arson per year per 100,000: ");
        	CrimeStats.print(cityA.crimeStats.getArsonStats());
-       	System.out.println();
+       	System.out.println(); 
+       	
+       	*/
 	} // end method main
 	
 } // end class
