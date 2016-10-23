@@ -7,10 +7,11 @@ amISafeHere.controller('CityCtrl', function ($scope, $http) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var location = reformatAddress(coordToCity(position.coords.latitude, position.coords.longitude));
                 $http.post("getCityStatistics" + "?location=" + location)
-                .success(function(data){
-                    console.info(data.city);
-                    console.info(data.state);
-                    loadModal(parseOutput(data));
+                .success(function(result){
+                    console.info(result.city);
+                    console.info(result.state);
+                    $scope.result = result;
+                    loadModal(parseOutput(result));
                 })
                 .error(function(data){
                     console.error('fail');

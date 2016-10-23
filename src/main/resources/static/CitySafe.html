@@ -123,7 +123,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -132,6 +132,38 @@
                     <h4 class="modal-title" id="myModalLabel">Search Results</h4>
                 </div>
                 <div class="modal-body" id="resultModalBody">
+                    <div class="container">
+                        <div class="row" id="cityStateTitle" ng-model="result">
+                            <h3>{{result.city}}, {{result.state}}</h3>
+                            <div class="col" id="displayResult">
+                                {{result.index}}
+                                {{result.average}}
+                                {{result.years}}
+                            </div>
+                            <div class="col" id="noResultError">
+                                <p>We are <em>unable to find</em> the results for {{result.city}}, {{result.state}} in our database.</p>
+                                <p>We <strong>apologize</strong> for the <em>inconvenience</em>.</p>
+                                <p>Please report this issue to us by contacting us if you have time.</p>
+                                <p>Thank you.</p>
+                            </div>
+                        </div>
+                        <div class="row" id="noGpsError">
+                            <p>
+                                Unable to access your current locaitons.
+                                <br/>
+                                Please use the search box.
+                            </p>
+                        </div>
+
+                        <div class="row" id="serverError">
+                            <p>
+                                Error connecting to server.
+                                <br />
+                                Please try again later.
+                            </p>
+                        </div>
+
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

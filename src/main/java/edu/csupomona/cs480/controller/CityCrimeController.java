@@ -7,20 +7,66 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Random;
 
 /**
  * @author Wai Phyo
  */
+
+
 @RestController
 public class CityCrimeController {
 
+    /**
+     *
+     * @param location format: "City-State-Country" NOTE: '_' is replaced with space. Need to replace it back
+     * @return JSON
+     * @throws JsonParseException
+     * @throws IOException
+     *
+     * Raw JSON format
+     * {
+     *     "city":"<city name>",
+     *     "state":"<state name>",
+     *     "result":<true/false>,
+     *     "index":<0 to 5>,
+     *     "average":<Double>,
+     *     "years":[
+     *          2014,2013,2012
+     *     ],
+     *     "category":[
+     *          {
+     *              "<name>":[number,number,number]
+     *          }
+     *          <repeat for all crime categories>
+     *     ]
+     * }
+     *
+     */
     @RequestMapping(value = "/getCityStatistics", method = RequestMethod.POST)
     String getCityStatistics(@RequestParam("location") String location) throws JsonParseException, IOException {
-        String[] address = location.split("-");
-        String jsonString = "{\"k1\":\"v1\",\"k2\":\"v2\"}";
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode actualObj = mapper.readTree(jsonString);
-        return "{\"city\":\"" + address[0] + "\",\"state\":\""+address[1]+"\"}";
+        String[] address = location.replaceAll("_", " ").split("-");
+        // return crimeStatisticsApi(address[0], address[1]);
+        String result = "{"
+                + "\"city\":\"Pomona\","
+                + "\"state\":\"California\","
+                + "\"result\":true,"
+                + "\"index\":3,"
+                + "\"average\":2015.75,"
+                + "\"years\":[2014,2013,2012]"
+                + "}";
+        return result;
+        /*
+        return "{\"city\":\"Pomona\",\"state\":\"California\",\"result\":true,\"index\":3,\"average\":2015.75,"
+                + "\"years\":[2014,2013,2012],"
+                + "\"category\":["
+                + "{\"numMurders\":[17,29,18]}"
+                + "{\"numRapes\":[17,29,18]}"
+                + "{\"numRobberies\":[17,29,18]}"
+                + "{\"numAssaults\":[17,29,18]}"
+                + "{\"numAutoThefts\":[17,29,18]}"
+                + "{\"numArsons\":[17,29,18]}"
+                + "{\"murderStats\":[17,29,18]}"
+                + "]}";
+                */
     }
 }
