@@ -8,4 +8,10 @@ public class MathHelper {
     public double getAverage(final double [] arr) {
         return StatUtils.mean(arr);
     }
+
+    public double percentIncrease(final double fromNum, final double toNum) {
+        double increase = ((fromNum / toNum) - 1) * (toNum / fromNum) * -1;
+        return increase * 100;
+    }
+
 }
