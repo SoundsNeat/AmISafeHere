@@ -85,7 +85,7 @@ public class WebController {
 	 * @return int to indicate whether cityA danger > cityB danger
 	 */
 	@RequestMapping(value = "/SoundsNeat/Danger/{cityA, cityB}", method = RequestMethod.GET)
-	int compare(@PathVariable("cityA") String cityA, @PathVariable("cityB") String cityB){
+	public int compare(@PathVariable("cityA") String cityA, @PathVariable("cityB") String cityB){
 		int cityADanger = getDangerLevel(cityA);
 		int cityBDanger = getDangerLevel(cityB);
 		if(cityADanger > cityBDanger) {
@@ -179,7 +179,6 @@ public class WebController {
 	String returnParam(@RequestParam("test") String test) {
 		return test;
 	}
-
 	@RequestMapping(value = "/480/manga", method = RequestMethod.GET)
 	public @ResponseBody
 	String readKingDomManga(@RequestParam("website")final String website, @RequestParam("name")final String name) throws IOException {
