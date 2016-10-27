@@ -16,7 +16,8 @@ public class CreateCrimeStatsTest {
 	public static void main(String[] args) throws Exception {
 		boolean JSON = true; // example input: {"city":"Pomona","state":"California"}
 		CreateCrimeStats cityA = null;
-
+		args = new String[1];
+		args[0] = "{\"city\":\"Pomona\",\"state\":\"California\"}";
 		if(JSON){
 			ObjectMapper mapper = new ObjectMapper();
 	//		replaceAll method prevents mapper.readValue from stripping quotation marks out of JSON format.
