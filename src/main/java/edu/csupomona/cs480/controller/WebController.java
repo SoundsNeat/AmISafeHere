@@ -200,5 +200,8 @@ public class WebController {
         return MathArrays.distance1(point1, point2);
     }
 
+    public void initRandom(){
+		random = new Random();
+	}
 
 }
