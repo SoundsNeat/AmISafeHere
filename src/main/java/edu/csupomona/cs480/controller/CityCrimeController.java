@@ -42,13 +42,13 @@ public class CityCrimeController {
      * }
      *
      */
-    @RequestMapping(value = "/getCityStatistics", method = RequestMethod.POST)
+    @RequestMapping(value = "/getCityStatistics?location={location}", method = RequestMethod.GET)
     String getCityStatistics(@RequestParam("location") String location) throws JsonParseException, IOException {
-        String[] address = location.replaceAll("_", " ").split("-");
+        String[] address = location.split(",");
         // return crimeStatisticsApi(address[0], address[1]);
         String result = "{"
-                + "\"city\":\"Pomona\","
-                + "\"state\":\"California\","
+                + "\"city\":\"" + address[1] + "\","
+                + "\"state\":\"" + address[2] + "\","
                 + "\"result\":true,"
                 + "\"index\":3,"
                 + "\"average\":2015.75,"
