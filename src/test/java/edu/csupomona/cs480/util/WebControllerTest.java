@@ -3,9 +3,8 @@ package edu.csupomona.cs480.util;
 import edu.csupomona.cs480.controller.WebController;
 import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Mock;
 /**
- * Created by bechin on 10/25/16.
+ * @author Ben Chin
  */
 public class WebControllerTest {
 
