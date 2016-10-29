@@ -82,7 +82,7 @@ public class CrimeStats {
 
 	public float getMurderStats(int year) {
 		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(murderStats[i] == year){
+			if(crimeDataYears[i] == year){
 				return murderStats[i];
 			} // end if
 		} // end for i
@@ -99,7 +99,7 @@ public class CrimeStats {
 
 	public float getRapeStats(int year) {
 		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(rapeStats[i] == year){
+			if(crimeDataYears[i] == year){
 				return rapeStats[i];
 			} // end if
 		} // end for i
@@ -116,7 +116,7 @@ public class CrimeStats {
 
 	public float getRobberyStats(int year) {
 		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(robberyStats[i] == year){
+			if(crimeDataYears[i] == year){
 				return robberyStats[i];
 			} // end if
 		} // end for i
@@ -133,7 +133,7 @@ public class CrimeStats {
 
 	public float getAssaultStats(int year) {
 		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(assaultStats[i] == year){
+			if(crimeDataYears[i] == year){
 				return assaultStats[i];
 			} // end if
 		} // end for i
@@ -150,7 +150,7 @@ public class CrimeStats {
 
 	public float getBurglaryStats(int year) {
 		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(burglaryStats[i] == year){
+			if(crimeDataYears[i] == year){
 				return burglaryStats[i];
 			} // end if
 		} // end for i
@@ -167,7 +167,7 @@ public class CrimeStats {
 
 	public float getTheftStats(int year) {
 		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(theftStats[i] == year){
+			if(crimeDataYears[i] == year){
 				return theftStats[i];
 			} // end if
 		} // end for i
@@ -184,7 +184,7 @@ public class CrimeStats {
 
 	public float getAutoTheftStats(int year) {
 		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(autoTheftStats[i] == year){
+			if(crimeDataYears[i] == year){
 				return autoTheftStats[i];
 			} // end if
 		} // end for i
@@ -201,7 +201,7 @@ public class CrimeStats {
 
 	public float getArsonStats(int year) {
 		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(arsonStats[i] == year){
+			if(crimeDataYears[i] == year){
 				return arsonStats[i];
 			} // end if
 		} // end for i
@@ -218,7 +218,7 @@ public class CrimeStats {
 
 	public float getCrimeDataIndex(int year) {
 		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataIndex[i] == year){
+			if(crimeDataYears[i] == year){
 				return crimeDataIndex[i];
 			} // end if
 		} // end for i
@@ -258,7 +258,7 @@ public class CrimeStats {
 	
 	public int getNumMurders(int year) {
 		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(numMurders[i] == year){
+			if(crimeDataYears[i] == year){
 				return numMurders[i];
 			} // end if
 		} // end for i
@@ -275,7 +275,7 @@ public class CrimeStats {
 
 	public int getNumRapes(int year) {
 		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(numRapes[i] == year){
+			if(crimeDataYears[i] == year){
 				return numRapes[i];
 			} // end if
 		} // end for i
@@ -292,7 +292,7 @@ public class CrimeStats {
 
 	public int getNumRobberies(int year) {
 		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(numRobberies[i] == year){
+			if(crimeDataYears[i] == year){
 				return numRobberies[i];
 			} // end if
 		} // end for i
@@ -309,7 +309,7 @@ public class CrimeStats {
 
 	public int getNumAssaults(int year) {
 		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(numAssaults[i] == year){
+			if(crimeDataYears[i] == year){
 				return numAssaults[i];
 			} // end if
 		} // end for i
@@ -326,7 +326,7 @@ public class CrimeStats {
 
 	public int getNumBurglaries(int year) {
 		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(numBurgleries[i] == year){
+			if(crimeDataYears[i] == year){
 				return numBurgleries[i];
 			} // end if
 		} // end for i
@@ -343,7 +343,7 @@ public class CrimeStats {
 
 	public int getNumThefts(int year) {
 		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(numThefts[i] == year){
+			if(crimeDataYears[i] == year){
 				return numThefts[i];
 			} // end if
 		} // end for i
@@ -360,7 +360,7 @@ public class CrimeStats {
 
 	public int getNumAutoThefts(int year) {
 		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(numAutoThefts[i] == year){
+			if(crimeDataYears[i] == year){
 				return numAutoThefts[i];
 			} // end if
 		} // end for i
@@ -377,7 +377,7 @@ public class CrimeStats {
 
 	public int getNumArsons(int year) {
 		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(numArsons[i] == year){
+			if(crimeDataYears[i] == year){
 				return numArsons[i];
 			} // end if
 		} // end for i
