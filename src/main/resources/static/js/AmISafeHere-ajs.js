@@ -6,32 +6,29 @@ amISafeHere.controller('CityCtrl', function ($scope, $http) {
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
-                var lat = position.coords.latitude;
-                var long = position.coords.longitude;
-                var location;
-                $http.post(googleMaps + lat + "," + long + "&sensor=true")
+                var location = "";
+                $http.post(googleMaps + position.coords.latitude + "," + position.coords.longitude + "&sensor=true")
                 .success(function(result){
-                    location = result.results[0].address_components[2].long_name + "," +
-                               result.results[0].address_components[3].long_name + "," +
-                               result.results[0].address_components[5].long_name;
-                    console.info(location);
+                    location = result.results[0].address_components[3].long_name + "-" +
+                               result.results[0].address_components[5].long_name + "-" +
+                               result.results[0].address_components[6].long_name;
+                    console.info("used google map" + location);
+                    $http.post("getCityStatistics" + "?location=" + reformatAddress(location))
+                    .success(function(result){
+                        console.info("auto");
+                        console.info(result.city);
+                        console.info(result.state);
+                        $scope.result = result;
+                        loadModal(parseOutput(result));
+                    })
+                    .error(function(data){
+                        console.error('fail to connect to backend for auto');
+                        loadModal(parseServerConnectError());
+                    });
                 })
                 .error(function(data){
-                    console.error('fail');
-                    loadModal(parseServerConnectError());
-                });
-
-                //TODO: Calling our own method here seems unnecessary?
-                $http.get("getCityStatistics" + "?location=" + location)
-                .success(function(result){
-                    console.info(result.city);
-                    console.info(result.state);
-                    $scope.result = result;
-                    loadModal(parseOutput(result));
-                })
-                .error(function(data){
-                    console.error('fail');
-                    loadModal(parseServerConnectError());
+                    console.error('fail to get coords from google map');
+                    loadModal(parseNoGpsError());
                 });
             });
         } else {
@@ -43,14 +40,15 @@ amISafeHere.controller('CityCtrl', function ($scope, $http) {
     $scope.SearchCityWithAddress = function () {
         $http.post("getCityStatistics" + "?location=" + reformatAddress($('#selectedCity').text()))
             .success(function(data){
+                console.info("manual");
                 console.info(data.city);
                 console.info(data.state);
+                $scope.result = data;
                 loadModal(parseOutput(data));
             })
             .error(function(data){
-                console.error('fail');
+                console.error('fail to connect to backend for manual');
                 loadModal(parseServerConnectError());
             });
     }
-
 });
