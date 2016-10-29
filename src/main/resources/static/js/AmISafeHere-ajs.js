@@ -3,7 +3,7 @@ var googleMaps = "http://maps.googleapis.com/maps/api/geocode/json?latlng=";
 
 amISafeHere.controller('CityCtrl', function ($scope, $http) {
     $scope.SearchCityWithCoordinates = function () {
-        console.info("with Jenkins 0.2");
+        console.info("with Jenkins 0.3");
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var location = "";
