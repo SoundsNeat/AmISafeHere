@@ -12,7 +12,7 @@ amISafeHere.controller('CityCtrl', function ($scope, $http) {
                     location = result.results[0].address_components[3].long_name + "-" +
                                result.results[0].address_components[5].long_name + "-" +
                                result.results[0].address_components[6].long_name;
-                    console.info("used google map" + location);
+                    console.info("used google map: " + location);
                     $http.post("getCityStatistics" + "?location=" + reformatAddress(location))
                     .success(function(result){
                         console.info("auto");
