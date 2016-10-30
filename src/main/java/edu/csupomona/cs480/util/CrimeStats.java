@@ -6,11 +6,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * 
  * @author Jonathan T. Fetzer
+ * clean-up/documentation: Connor A. Haskins
  * class: CS 480, Cal Poly Pomona
  * group: Sounds Neat
  *
  */
 
+/**
+ * Class used to hold all of the crime statistics of a city
+ */
 public class CrimeStats {	
 
 	private String city;
@@ -23,7 +27,7 @@ public class CrimeStats {
 	private int[] numRapes;
 	private int[] numRobberies;
 	private int[] numAssaults;
-	private int[] numBurgleries;
+	private int[] numBurglaries;
 	private int[] numThefts;
 	private int[] numAutoThefts;
 	private int[] numArsons;
@@ -37,366 +41,297 @@ public class CrimeStats {
 	private float[] autoTheftStats;
 	private float[] arsonStats;
 	private float[] crimeDataIndex;
-	
+
+    /**
+     * Create an instance of CrimeState using city and state name strings
+     * @param city
+     * @param state
+     */
 	CrimeStats(String city, String state){
 		this.city = city;
 		this.state = state;
 	} // end constructor CrimeStats
-	
-	public String getCity(){
-		return city;
-	} // end method getCity
-	
-	public void setCity(String city){
-		this.city = city;
-	} // end method setCity
-	
-	public String getState(){
-		return state;
-	} // end method getCity
-	
-	public void setState(String state){
-		this.state = state;
-	} // end method setCity
-	
+
+    /**
+     * Getters
+      */
+
+    public int getCrimeDataYear(int index){
+        if(index < 0 || index > crimeDataYears.length){
+            throw new IndexOutOfBoundsException("index passed: " + index +
+                    ", must be between 0 and " + crimeDataYears.length +
+                    " for " + city + ", " + state);
+        }
+        return crimeDataYears[index];
+    }
+
+    public String getCity(){
+        return city;
+    }
+
+    public String getState(){
+        return state;
+    }
+
+    public int[] getCrimeDataYears() {
+        return crimeDataYears;
+    }
+
+    public float[] getMurderStats() {
+        return murderStats;
+    }
+
+    public float[] getRapeStats() {
+        return rapeStats;
+    }
+
+    public float[] getRobberyStats() {
+        return robberyStats;
+    }
+
+    public float[] getAssaultStats() {
+        return assaultStats;
+    }
+
+    public float[] getBurglaryStats() {
+        return burglaryStats;
+    }
+
+    public float[] getTheftStats() {
+        return theftStats;
+    }
+
+    public float[] getAutoTheftStats() {
+        return autoTheftStats;
+    }
+
+    public float[] getArsonStats() {
+        return arsonStats;
+    }
+
+    public float[] getCrimeDataIndex() {
+        return crimeDataIndex;
+    }
+
+    public int getAmISafeIndex() {
+        return amISafeIndex;
+    }
+
+    public int[] getNumMurders() {
+        return numMurders;
+    }
+
+    public int[] getNumRapes() {
+        return numRapes;
+    }
+
+    public int[] getNumRobberies() {
+        return numRobberies;
+    }
+
+    public int[] getNumAssaults() {
+        return numAssaults;
+    }
+
+    public int[] getNumBurglaries() {
+        return numBurglaries;
+    }
+
+    public int[] getNumThefts() {
+        return numThefts;
+    }
+
+    public int[] getNumAutoThefts() {
+        return numAutoThefts;
+    }
+
+    public int[] getNumArsons() {
+        return numArsons;
+    }
+
+    public float getMurderStats(int year) {
+        return murderStats[getYearIndex(year)];
+    }
+
+    public float getRapeStats(int year) {
+        return rapeStats[getYearIndex(year)];
+    }
+
+    public float getRobberyStats(int year) {
+        return robberyStats[getYearIndex(year)];
+    }
+
+    public float getAssaultStats(int year) {
+        return assaultStats[getYearIndex(year)];
+    }
+
+    public float getBurglaryStats(int year) {
+        return burglaryStats[getYearIndex(year)];
+    }
+
+    public float getTheftStats(int year) {
+        return theftStats[getYearIndex(year)];
+    }
+
+    public float getAutoTheftStats(int year) {
+        return autoTheftStats[getYearIndex(year)];
+    }
+
+    public float getArsonStats(int year) {
+        return arsonStats[getYearIndex(year)];
+    }
+
+    public float getCrimeDataIndex(int year) {
+        return crimeDataIndex[getYearIndex(year)];
+    }
+
+    public int getNumMurders(int year) {
+        return numMurders[getYearIndex(year)];
+    }
+
+    public int getNumRapes(int year) {
+        return numRapes[getYearIndex(year)];
+    }
+
+    public int getNumRobberies(int year) {
+        return numRobberies[getYearIndex(year)];
+    }
+
+    public int getNumAssaults(int year) {
+        return numAssaults[getYearIndex(year)];
+    }
+
+    public int getNumBurglaries(int year) {
+        return numBurglaries[getYearIndex(year)];
+    }
+
+    public int getNumThefts(int year) {
+        return numThefts[getYearIndex(year)];
+    }
+
+    public int getNumAutoThefts(int year) {
+        return numAutoThefts[getYearIndex(year)];
+    }
+
+    public int getNumArsons(int year) {
+        return numArsons[getYearIndex(year)];
+    }
+
+    /**
+     * Setters
+     */
+
+    public void setCrimeDataIndex(float[] crimeDataIndex) {
+        this.crimeDataIndex = crimeDataIndex;
+    }
+
+    public void setAmISafeIndex() {
+        // TODO: calculate amISafeIndex using crimeDataIndex
+    }
+
+    public void setCity(String city){
+        this.city = city;
+    }
+
+    public void setState(String state){
+        this.state = state;
+    }
+
+	public void setNumArsons(int[] numArsons) {
+		this.numArsons = numArsons;
+	}
+
+	public void setNumAutoThefts(int[] numAutoThefts) {
+		this.numAutoThefts = numAutoThefts;
+	}
+
+	public void setNumThefts(int[] numThefts) {
+		this.numThefts = numThefts;
+	}
+
+	public void setNumBurglaries(int[] numBurgleries) {
+		this.numBurglaries = numBurgleries;
+	}
+
+	public void setNumAssaults(int[] numAssaults) {
+		this.numAssaults = numAssaults;
+	}
+
 	public void setCrimeDataYears(int[] crimeDataYears){
 		this.crimeDataYears = crimeDataYears;
 	} // end method setCrimeDataYears
-	
-	public int getCrimeDataYear(int index){
-		if(index < 0 || index > crimeDataYears.length){
-			throw new IndexOutOfBoundsException("index passed: " + index + 
-					", must be between 0 and " + crimeDataYears.length + 
-					" for " + city + ", " + state);
-		} // end if
-		return crimeDataYears[index];
-	} // end method getDataYear
 
-	public int[] getCrimeDataYears() {
-		return crimeDataYears;
-	}
-	
-	public float[] getMurderStats() {
-		return murderStats;
-	}
-
-	public float getMurderStats(int year) {
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataYears[i] == year){
-				return murderStats[i];
-			} // end if
-		} // end for i
-		return -1; // data for year requested not available
-	}
-	
 	public void setMurderStats(float[] murderStats) {
 		this.murderStats = murderStats;
 	}
 
-	public float[] getRapeStats() {
-		return rapeStats;
-	}
-
-	public float getRapeStats(int year) {
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataYears[i] == year){
-				return rapeStats[i];
-			} // end if
-		} // end for i
-		return -1; // data for year requested not available
-	}
-	
 	public void setRapeStats(float[] rapeStats) {
 		this.rapeStats = rapeStats;
 	}
 
-	public float[] getRobberyStats() {
-		return robberyStats;
-	}
-
-	public float getRobberyStats(int year) {
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataYears[i] == year){
-				return robberyStats[i];
-			} // end if
-		} // end for i
-		return -1; // data for year requested not available
-	}
-	
 	public void setRobberyStats(float[] robberyStats) {
 		this.robberyStats = robberyStats;
 	}
 
-	public float[] getAssaultStats() {
-		return assaultStats;
-	}
-
-	public float getAssaultStats(int year) {
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataYears[i] == year){
-				return assaultStats[i];
-			} // end if
-		} // end for i
-		return -1; // data for year requested not available
-	}
-	
 	public void setAssaultStats(float[] assaultStats) {
 		this.assaultStats = assaultStats;
 	}
 
-	public float[] getBurglaryStats() {
-		return burglaryStats;
-	}
-
-	public float getBurglaryStats(int year) {
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataYears[i] == year){
-				return burglaryStats[i];
-			} // end if
-		} // end for i
-		return -1; // data for year requested not available
-	}
-	
 	public void setBurglaryStats(float[] burglaryStats) {
 		this.burglaryStats = burglaryStats;
 	}
 
-	public float[] getTheftStats() {
-		return theftStats;
-	}
-
-	public float getTheftStats(int year) {
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataYears[i] == year){
-				return theftStats[i];
-			} // end if
-		} // end for i
-		return -1; // data for year requested not available
-	}
-	
 	public void setTheftStats(float[] theftStats) {
 		this.theftStats = theftStats;
 	}
 
-	public float[] getAutoTheftStats() {
-		return autoTheftStats;
-	}
-
-	public float getAutoTheftStats(int year) {
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataYears[i] == year){
-				return autoTheftStats[i];
-			} // end if
-		} // end for i
-		return -1; // data for year requested not available
-	}
-	
 	public void setAutoTheftStats(float[] autoTheftStats) {
 		this.autoTheftStats = autoTheftStats;
 	}
 
-	public float[] getArsonStats() {
-		return arsonStats;
-	}
-
-	public float getArsonStats(int year) {
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataYears[i] == year){
-				return arsonStats[i];
-			} // end if
-		} // end for i
-		return -1; // data for year requested not available
-	}
-	
 	public void setArsonStats(float[] arsonStats) {
 		this.arsonStats = arsonStats;
-	}
-
-	public float[] getCrimeDataIndex() {
-		return crimeDataIndex;
-	}
-
-	public float getCrimeDataIndex(int year) {
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataYears[i] == year){
-				return crimeDataIndex[i];
-			} // end if
-		} // end for i
-		return -1; // data for year requested not available
-	}
-	public void setCrimeDataIndex(float[] crimeDataIndex) {
-		this.crimeDataIndex = crimeDataIndex;
-	}
-	
-	public int getAmISafeIndex() {
-		return amISafeIndex;
-	}
-
-	public void setAmISafeIndex() {
-		// calculate amISafeIndex using crimeDataIndex
-	}
-	
-	public static void print(int[] param){
-		int i;
-		for (i = 0; i < param.length - 1; i++) {
-			System.out.print(param[i] + ", ");
-		} // end for i
-		System.out.println(param[i]);
-	}
-	
-	public static void print(float[] param){
-		int i;
-		for (i = 0; i < param.length - 1; i++) {
-			System.out.print(param[i] + ", ");
-		} // end for i
-		System.out.println(param[i]);
-	}
-	
-	public int[] getNumMurders() {
-		return numMurders;
-	}
-	
-	public int getNumMurders(int year) {
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataYears[i] == year){
-				return numMurders[i];
-			} // end if
-		} // end for i
-		return -1; // data for year requested not available
 	}
 
 	public void setNumMurders(int[] numMurders) {
 		this.numMurders = numMurders;
 	}
 
-	public int[] getNumRapes() {
-		return numRapes;
-	}
-
-	public int getNumRapes(int year) {
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataYears[i] == year){
-				return numRapes[i];
-			} // end if
-		} // end for i
-		return -1; // data for year requested not available
-	}
-	
 	public void setNumRapes(int[] numRapes) {
 		this.numRapes = numRapes;
 	}
 
-	public int[] getNumRobberies() {
-		return numRobberies;
-	}
-
-	public int getNumRobberies(int year) {
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataYears[i] == year){
-				return numRobberies[i];
-			} // end if
-		} // end for i
-		return -1; // data for year requested not available
-	}
-	
 	public void setNumRobberies(int[] numRobberies) {
 		this.numRobberies = numRobberies;
 	}
 
-	public int[] getNumAssaults() {
-		return numAssaults;
-	}
+    /**
+     * Helper function to link the desired year to the proper index of the arrays
+     * @param year (ex: 2011)
+     * @return an index (ex: 2, to be used for numRobberries[2])
+     */
+    private int getYearIndex(int year){
+        for (int i = 0; i < crimeDataYears.length; i++) {
+            if(crimeDataYears[i] == year){
+                return i;
+            }
+        }
+        return -1; // data for year requested not available
+    }
 
-	public int getNumAssaults(int year) {
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataYears[i] == year){
-				return numAssaults[i];
-			} // end if
-		} // end for i
-		return -1; // data for year requested not available
-	}
-	
-	public void setNumAssaults(int[] numAssaults) {
-		this.numAssaults = numAssaults;
-	}
-
-	public int[] getNumBurglaries() {
-		return numBurgleries;
-	}
-
-	public int getNumBurglaries(int year) {
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataYears[i] == year){
-				return numBurgleries[i];
-			} // end if
-		} // end for i
-		return -1; // data for year requested not available
-	}
-	
-	public void setNumBurglaries(int[] numBurgleries) {
-		this.numBurgleries = numBurgleries;
-	}
-
-	public int[] getNumThefts() {
-		return numThefts;
-	}
-
-	public int getNumThefts(int year) {
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataYears[i] == year){
-				return numThefts[i];
-			} // end if
-		} // end for i
-		return -1; // data for year requested not available
-	}
-	
-	public void setNumThefts(int[] numThefts) {
-		this.numThefts = numThefts;
-	}
-
-	public int[] getNumAutoThefts() {
-		return numAutoThefts;
-	}
-
-	public int getNumAutoThefts(int year) {
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataYears[i] == year){
-				return numAutoThefts[i];
-			} // end if
-		} // end for i
-		return -1; // data for year requested not available
-	}
-	
-	public void setNumAutoThefts(int[] numAutoThefts) {
-		this.numAutoThefts = numAutoThefts;
-	}
-
-	public int[] getNumArsons() {
-		return numArsons;
-	}
-
-	public int getNumArsons(int year) {
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			if(crimeDataYears[i] == year){
-				return numArsons[i];
-			} // end if
-		} // end for i
-		return -1; // data for year requested not available
-	}
-	
-	public void setNumArsons(int[] numArsons) {
-		this.numArsons = numArsons;
-	}
-	
-	public String toJson(){
-		ObjectMapper mapper = new ObjectMapper();
-		String jsonString = null;
-		try {
-			jsonString = mapper.writeValueAsString(this);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return jsonString;
-	} // end method toJson
+    /**
+     * Super cool function that turns the CrimeStats object into JSON format
+     * @return
+     */
+	public String toJson() {
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonString = null;
+        try {
+            jsonString = mapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return jsonString;
+    }
 }
