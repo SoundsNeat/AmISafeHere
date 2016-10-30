@@ -1,4 +1,4 @@
-package edu.csupomona.cs480.util;
+package edu.csupomona.cs480.util.CrimeStats;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -34,12 +34,14 @@ public class CreateCrimeStats{
      * @param state state name
      * @throws IOException from the Jsoup.connect function call
      */
-	CreateCrimeStats(String city, String state) throws IOException{
+	public CreateCrimeStats(String city, String state) throws IOException{
         // create a CrimeStats object for the chosen city
     	crimeStats = new CrimeStats(city, state);
 
-        // ensure a multiple word city is url friendls
+        // ensure a multiple word city is url friendly
     	city = city.replaceAll(" ", "-");
+        // ensure a multiple word state is url friendly
+        state = state.replaceAll(" ", "-");
         // get the html page for the desired city
         Document doc = Jsoup.connect("http://www.city-data.com/city/" + city + "-" + state + ".html").get();
         html = doc.toString();
@@ -130,13 +132,18 @@ public class CreateCrimeStats{
         int [] numCrimes = new int[this.numYears];
         int data;
 
-        for (int i = 0; i < this.numYears; i++) {
-            startData = html.indexOf("<td>", startData) + 4;
-            endData = html.indexOf("</td>", startData);
-            data = Integer.parseInt(html.substring(startData, endData).replaceAll(",",""));
-            numCrimes[i] = data;
+        try {
+            for (int i = 0; i < this.numYears; i++) {
+                startData = html.indexOf("<td>", startData) + 4;
+                endData = html.indexOf("</td>", startData);
+                data = Integer.parseInt(html.substring(startData, endData).replaceAll(",",""));
+                numCrimes[i] = data;
+            }
+            parseIterator.set(endData);
+        } catch (NumberFormatException nfe) {
+            numCrimes = null;
         }
-        parseIterator.set(endData);
+
         return numCrimes;
     }
 
@@ -151,13 +158,18 @@ public class CreateCrimeStats{
         float [] stats = new float[this.numYears];
         float crimeStat;
 
-        for (int i = 0; i < this.numYears; i++) {
-            startStats = html.indexOf("<td>", startStats) + 4;
-            endStats = html.indexOf("</td>", startStats);
-            crimeStat = Float.parseFloat(html.substring(startStats, endStats).replaceAll(",", ""));
-            stats[i] = crimeStat;
+        try {
+            for (int i = 0; i < this.numYears; i++) {
+                startStats = html.indexOf("<td>", startStats) + 4;
+                endStats = html.indexOf("</td>", startStats);
+                crimeStat = Float.parseFloat(html.substring(startStats, endStats).replaceAll(",", ""));
+                stats[i] = crimeStat;
+            }
+            parseIterator.set(endStats);
+        } catch (NumberFormatException nfe) {
+            stats = null;
         }
-        parseIterator.set(endStats);
+
         return stats;
     }
 

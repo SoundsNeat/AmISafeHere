@@ -1,4 +1,4 @@
-package edu.csupomona.cs480.util;
+package edu.csupomona.cs480.util.CrimeStats;
 
 /**
  * Simple class to pair City and State Strings

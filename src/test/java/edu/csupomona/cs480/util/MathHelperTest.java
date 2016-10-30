@@ -5,7 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Created by william on 10/20/16.
+ * Created by william on 10/20/16
+ * Additional tests by Connor
  */
 public class MathHelperTest {
     MathHelper mathHelper;

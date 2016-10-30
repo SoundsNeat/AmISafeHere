@@ -1,4 +1,4 @@
-package edu.csupomona.cs480.util;
+package edu.csupomona.cs480.util.CrimeStats;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,10 +42,11 @@ public class CrimeStats {
 
     /**
      * Create an instance of CrimeState using city and state name strings
+     *
      * @param city
      * @param state
      */
-    CrimeStats(String city, String state) {
+    protected CrimeStats(String city, String state) {
         this.city = city;
         this.state = state;
     } // end constructor CrimeStats
@@ -148,71 +149,139 @@ public class CrimeStats {
     }
 
     public float getMurderStats(int year) {
-        return murderStats[getYearIndex(year)];
+        if (murderStats != null) {
+            return murderStats[getYearIndex(year)];
+        } else {
+            return -1;
+        }
     }
 
     public float getRapeStats(int year) {
-        return rapeStats[getYearIndex(year)];
+        if (rapeStats != null) {
+            return rapeStats[getYearIndex(year)];
+        } else {
+            return -1;
+        }
     }
 
     public float getRobberyStats(int year) {
-        return robberyStats[getYearIndex(year)];
+        if (robberyStats != null) {
+            return robberyStats[getYearIndex(year)];
+        } else {
+            return -1;
+        }
     }
 
     public float getAssaultStats(int year) {
-        return assaultStats[getYearIndex(year)];
+        if (assaultStats != null) {
+            return assaultStats[getYearIndex(year)];
+        } else {
+            return -1;
+        }
     }
 
     public float getBurglaryStats(int year) {
-        return burglaryStats[getYearIndex(year)];
+        if (burglaryStats != null) {
+            return burglaryStats[getYearIndex(year)];
+        } else {
+            return -1;
+        }
     }
 
     public float getTheftStats(int year) {
-        return theftStats[getYearIndex(year)];
+        if (theftStats != null) {
+            return theftStats[getYearIndex(year)];
+        } else {
+            return -1;
+        }
     }
 
     public float getAutoTheftStats(int year) {
-        return autoTheftStats[getYearIndex(year)];
+        if (autoTheftStats != null) {
+            return autoTheftStats[getYearIndex(year)];
+        } else {
+            return -1;
+        }
     }
 
     public float getArsonStats(int year) {
-        return arsonStats[getYearIndex(year)];
+        if (arsonStats != null) {
+            return arsonStats[getYearIndex(year)];
+        } else {
+            return -1;
+        }
     }
 
     public float getCrimeDataIndex(int year) {
-        return crimeDataIndex[getYearIndex(year)];
+        if (crimeDataIndex != null) {
+            return crimeDataIndex[getYearIndex(year)];
+        } else {
+            return -1;
+        }
     }
 
     public int getNumMurders(int year) {
-        return numMurders[getYearIndex(year)];
+        if (numMurders != null) {
+            return numMurders[getYearIndex(year)];
+        } else {
+            return -1;
+        }
     }
 
     public int getNumRapes(int year) {
-        return numRapes[getYearIndex(year)];
+        if (numRapes != null) {
+            return numRapes[getYearIndex(year)];
+        } else {
+            return -1;
+        }
     }
 
     public int getNumRobberies(int year) {
-        return numRobberies[getYearIndex(year)];
+        if (numRobberies != null) {
+            return numRobberies[getYearIndex(year)];
+        } else {
+            return -1;
+        }
     }
 
     public int getNumAssaults(int year) {
-        return numAssaults[getYearIndex(year)];
+        if (numAssaults != null) {
+            return numAssaults[getYearIndex(year)];
+        } else {
+            return -1;
+        }
     }
 
     public int getNumBurglaries(int year) {
-        return numBurglaries[getYearIndex(year)];
+        if (numBurglaries != null) {
+            return numBurglaries[getYearIndex(year)];
+        } else {
+            return -1;
+        }
     }
 
     public int getNumThefts(int year) {
-        return numThefts[getYearIndex(year)];
+        if (numThefts != null) {
+            return numThefts[getYearIndex(year)];
+        } else {
+            return -1;
+        }
     }
 
     public int getNumAutoThefts(int year) {
-        return numAutoThefts[getYearIndex(year)];
+        if (numAutoThefts != null) {
+            return numAutoThefts[getYearIndex(year)];
+        } else {
+            return -1;
+        }
     }
 
     public int getNumArsons(int year) {
-        return numArsons[getYearIndex(year)];
+        if (numArsons != null) {
+            return numArsons[getYearIndex(year)];
+        } else {
+            return -1;
+        }
     }
 
     /**
@@ -305,6 +374,7 @@ public class CrimeStats {
 
     /**
      * Helper function to link the desired year to the proper index of the arrays
+     *
      * @param year (ex: 2011)
      * @return an index (ex: 2, to be used for numRobberries[2])
      */
@@ -319,6 +389,7 @@ public class CrimeStats {
 
     /**
      * Super cool function that turns the CrimeStats object into JSON format
+     *
      * @return
      */
     public String toJson() {
