@@ -48,7 +48,7 @@ public class CreateCrimeStatsTest {
 			} // end else if
 		} // end else
 		
-		System.out.println("JSON: " + cityA.crimeStats.toJson()+ "\n");
+		System.out.println("JSON: " + cityA.getCrimeStats().toJson()+ "\n");
 		
 		/*
 		// print crime data years
