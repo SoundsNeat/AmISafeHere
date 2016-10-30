@@ -1,6 +1,8 @@
 package edu.csupomona.cs480.util;
 
-import java.io.IOException;  
+import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.jsoup.Jsoup;  
 import org.jsoup.nodes.Document;
 
@@ -12,15 +14,24 @@ import org.jsoup.nodes.Document;
  */
 
 /**
- *  This class uses Jsoup to fetch and parse html pages.
- *  To use this class, download the Jsoup jar and add it to you java build path.
- *  In Eclipse, right click on project name -> properties -> java build path -> add external jars.
+ *  This class scrapes www.city-data.com for crime statistics based on the specified city and state
+ *  Much of the code written in this class are specific to this website
  */
-public class CreateCrimeStats{  
+public class CreateCrimeStats{
+    // the CrimeStats object to hold the crime statistics
 	private CrimeStats crimeStats;
+    // the available years or information offered by the www.city-data.com
     private int [] crimeDataYears;
+    // the html page to be scraped
     private String html;
-	
+
+    /**
+     * A constructor taking the city and state name and acquiring the crime
+     * statistics for that city
+     * @param city city name
+     * @param state state name
+     * @throws IOException
+     */
 	CreateCrimeStats(String city, String state) throws IOException{
         // create a CrimeStats object for the chosen city
     	crimeStats = new CrimeStats(city, state);
@@ -28,13 +39,13 @@ public class CreateCrimeStats{
         // ensure a multiple word city is url friendls
     	city = city.replaceAll(" ", "-");
         // get the html page for the desired city
-        Document doc = Jsoup.connect("http://www.city-data.com/city/" + city + "-" + state + ".html").get();  
+        Document doc = Jsoup.connect("http://www.city-data.com/city/" + city + "-" + state + ".html").get();
         html = doc.toString();
         // revert the city back to its original value
         city = city.replaceAll("-", " ");
 
         // iterator we will use to parse through the html String
-        int parseIterator = 0;
+        AtomicInteger parseIterator;
 
         //-----------------Parse-crime-data-years-----------------
         int crimeData = html.indexOf("Crime rates in " + city + " by Year") - 10;
@@ -44,110 +55,67 @@ public class CreateCrimeStats{
         this.crimeDataYears = new int[numCrimeDataYears];
 
         int parseYearStart = html.indexOf("</th>", crimeData + 10) + 5;
+        int parseYearEnd = 0;
         for (int i = 0; i < crimeDataYears.length; i++) {
         	parseYearStart = html.indexOf(">", parseYearStart) + 1;
-        	parseIterator = html.indexOf("</th>", parseYearStart);
-        	crimeDataYears[i] = Integer.parseInt(html.substring(parseYearStart, parseIterator));
-//        	System.out.println(crimeDataYears[i]);
-        	parseYearStart = parseIterator + 5;
+        	parseYearEnd = html.indexOf("</th>", parseYearStart);
+        	crimeDataYears[i] = Integer.parseInt(html.substring(parseYearStart, parseYearEnd));
+        	parseYearStart = parseYearEnd + 5;
 		} // end for i
+        parseIterator = new AtomicInteger(parseYearEnd);
         crimeStats.setCrimeDataYears(crimeDataYears);
 
         /**
-         * Ask for memory for all of our data
-         */
-        int [] numMurders = new int[crimeDataYears.length];
-        int [] numRapes = new int[crimeDataYears.length];
-        int [] numRobberies = new int[crimeDataYears.length];
-        int [] numAssaults = new int[crimeDataYears.length];
-        int [] numBurglaries = new int[crimeDataYears.length];
-        int [] numThefts = new int[crimeDataYears.length];
-        int [] numTheftsAuto = new int[crimeDataYears.length];
-        int [] numArson = new int[crimeDataYears.length];
-        float [] arsonStats = new float[crimeDataYears.length];
-        float [] autoStats = new float[crimeDataYears.length];
-        float [] theftStats = new float[crimeDataYears.length];
-        float [] burglaryStats = new float[crimeDataYears.length];
-        float [] assaultStats = new float[crimeDataYears.length];
-        float [] robberyStats = new float[crimeDataYears.length];
-        float [] rapeStats = new float[crimeDataYears.length];
-        float [] murderStats = new float[crimeDataYears.length];
-
-        /**
          * Scrape the page for all crime stats per year and per year per 100,000 citizens
+         * !!IMPORTANT!! The order of these function calls DO matter
          */
+        /**
+         * Get and set murder stats
+         */
+        crimeStats.setNumMurders(this.numPerYear("Murders", parseIterator));
+        crimeStats.setMurderStats(this.numPerYearPer100k(parseIterator));
 
         /**
-         * Get murder stats
-         */
-        parseIterator = this.numPerYear("Murders", parseIterator, numMurders);
-        crimeStats.setNumMurders(numMurders);
-
-        parseIterator = this.numPerYearPer100k(parseIterator, murderStats);
-        crimeStats.setMurderStats(murderStats);
+         * Get and set rape stats
+        */
+        crimeStats.setNumRapes(this.numPerYear("Rapes", parseIterator));
+        crimeStats.setRapeStats(this.numPerYearPer100k(parseIterator));
 
         /**
-         * Get rape stats
+         * Get and set robbery stats
          */
-        parseIterator = this.numPerYear("Rapes", parseIterator, numRapes);
-        crimeStats.setNumRapes(numRapes);
-
-        parseIterator = this.numPerYearPer100k(parseIterator, rapeStats);
-        crimeStats.setRapeStats(rapeStats);
+        crimeStats.setNumRobberies(this.numPerYear("Robberies", parseIterator));
+        crimeStats.setRobberyStats(this.numPerYearPer100k(parseIterator));
 
         /**
-         * Get robbery stats
+         * Get and set  stats
          */
-        parseIterator = this.numPerYear("Robberies", parseIterator, numRobberies);
-        crimeStats.setNumRobberies(numRobberies);
-
-        parseIterator = this.numPerYearPer100k(parseIterator, robberyStats);
-        crimeStats.setRobberyStats(robberyStats);
+        crimeStats.setNumAssaults(this.numPerYear("Assaults", parseIterator));
+        crimeStats.setAssaultStats(this.numPerYearPer100k(parseIterator));
 
         /**
-         * Get assult stats
+         * Get and set burglary stats
          */
-        parseIterator = this.numPerYear("Assaults", parseIterator, numAssaults);
-        crimeStats.setNumAssaults(numAssaults);
-
-        parseIterator = this.numPerYearPer100k(parseIterator, assaultStats);
-        crimeStats.setAssaultStats(assaultStats);
+        crimeStats.setNumBurglaries(this.numPerYear("Burglaries", parseIterator));
+        crimeStats.setBurglaryStats(this.numPerYearPer100k(parseIterator));
 
         /**
-         * Get burglary stats
+         * Get and set theft stats
          */
-        parseIterator = this.numPerYear("Burglaries", parseIterator, numBurglaries);
-        crimeStats.setNumBurglaries(numBurglaries);
-
-        parseIterator = this.numPerYearPer100k(parseIterator, burglaryStats);
-        crimeStats.setBurglaryStats(burglaryStats);
+        crimeStats.setNumThefts(this.numPerYear("Thefts", parseIterator));
+        crimeStats.setTheftStats(this.numPerYearPer100k(parseIterator));
 
         /**
-         * Get theft stats
+         * Get and set auto theft stats
          */
-        parseIterator = this.numPerYear("Thefts", parseIterator, numThefts);
-        crimeStats.setNumThefts(numThefts);
-
-        parseIterator = this.numPerYearPer100k(parseIterator, theftStats);
-        crimeStats.setTheftStats(theftStats);
+        crimeStats.setNumAutoThefts(this.numPerYear("Auto", parseIterator));
+        crimeStats.setAutoTheftStats(this.numPerYearPer100k(parseIterator));
 
         /**
-         * Get auto theft stats
+         * Get and set arson stats
          */
-        parseIterator = this.numPerYear("Auto", parseIterator, numTheftsAuto);
-        crimeStats.setNumAutoThefts(numTheftsAuto);
-
-        parseIterator = this.numPerYearPer100k(parseIterator, autoStats);
-        crimeStats.setAutoTheftStats(autoStats);
-
-        /**
-         * Get arson stats
-         */
-        parseIterator = this.numPerYear("Arson", parseIterator, numArson);
-        crimeStats.setNumArsons(numArson);
-
-        this.numPerYearPer100k(parseIterator, arsonStats);
-        crimeStats.setArsonStats(arsonStats);
+        crimeStats.setNumArsons(this.numPerYear("Arson", parseIterator));
+        crimeStats.setArsonStats(this.numPerYearPer100k(parseIterator));
     }
 
     /**
@@ -157,14 +125,14 @@ public class CreateCrimeStats{
     /**
      * Get the number of crimes in of the city for each year of available data
      * @param crime String representing the crime to be scraped
-     * @param prevParseEnd the current state of the parse iterator used to scrape the page
-     * @param numCrimes an array used to return the crime data values
-     * @return the new state of the parse iterator
+     * @param parseIterator the current state of the parse iterator used to scrape the page
+     * @return an array used to return the crime data values
      */
-    public int numPerYear(String crime, int prevParseEnd, int [] numCrimes) {
-        int startData = html.indexOf(crime, prevParseEnd);
-        int endData = startData;
-        int data = 0;
+    public int [] numPerYear(String crime, AtomicInteger parseIterator) {
+        int startData = html.indexOf(crime, parseIterator.intValue());
+        int endData = 0;
+        int [] numCrimes = new int[crimeDataYears.length];
+        int data;
 
         for (int i = 0; i < crimeDataYears.length; i++) {
             startData = html.indexOf("<td>", startData) + 4;
@@ -172,27 +140,29 @@ public class CreateCrimeStats{
             data = Integer.parseInt(html.substring(startData, endData).replaceAll(",",""));
             numCrimes[i] = data;
         } // end for i
-        return endData;
+        parseIterator.set(endData);
+        return numCrimes;
     }
 
     /**
      * Get the number of crimes in of the city for each year of available data per 100,000 citizens
-     * @param prevParseEnd the current state of the parse iterator used to scrape the page
-     * @param stats an array used to return the crime data values
-     * @return the new state of the parse iterator
+     * @param parseIterator the current state of the parse iterator used to scrape the page
+     * @return an array used to return the crime data values
      */
-    public int numPerYearPer100k(int prevParseEnd, float [] stats) {
-        int startStats = html.indexOf("</td>", prevParseEnd + 5);
+    public float [] numPerYearPer100k(AtomicInteger parseIterator) {
+        int startStats = html.indexOf("</td>", parseIterator.intValue() + 5);
         int endStats = 0;
-        float murderStat;
+        float [] stats = new float[crimeDataYears.length];
+        float crimeStat;
 
         for (int i = 0; i < crimeDataYears.length; i++) {
             startStats = html.indexOf("<td>", startStats) + 4;
             endStats = html.indexOf("</td>", startStats);
-            murderStat = Float.parseFloat(html.substring(startStats, endStats).replaceAll(",",""));
-            stats[i] = murderStat;
+            crimeStat = Float.parseFloat(html.substring(startStats, endStats).replaceAll(",",""));
+            stats[i] = crimeStat;
         } // end for i
-        return endStats;
+        parseIterator.set(endStats);
+        return stats;
     }
 
     /**
