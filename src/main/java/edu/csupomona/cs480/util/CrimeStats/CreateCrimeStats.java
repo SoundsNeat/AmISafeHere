@@ -44,8 +44,8 @@ public class CreateCrimeStats{
         state = state.replaceAll(" ", "-");
         // get the html page for the desired city
         Document doc = Jsoup.connect("http://www.city-data.com/city/" + city + "-" + state + ".html").get();
-        html = doc.toString();
-
+        html = doc.toString().replaceAll("N/A", "-0"); // handles cases where there is no data availale
+	
         /**
          * iterator we will use to parse through the html
          * we are using an AtomicInteger, so we can essentially pass an int by reference and remember
