@@ -40,6 +40,15 @@ public class CrimeStats {
     private float[] arsonStats;
     private float[] crimeDataIndex;
 
+    private double murderWeight;
+    private double rapeWeight;
+    private double robberyWeight;
+    private double assaultWeight;
+    private double burglaryWeight;
+    private double theftWeight;
+    private double autoTheftWeight;
+    private double arsonWeight;
+
     /**
      * Create an instance of CrimeState using city and state name strings
      *
@@ -293,35 +302,33 @@ public class CrimeStats {
     }
 
     public void setAmISafeIndex() {
-        	public void setCrimeDataIndex() {
-		this.crimeDataIndex = new float[crimeDataYears.length];
-		long crimeIndex;
-		int index = 0;
-		for (int i = 0; i < crimeDataYears.length; i++) {
-			crimeIndex = 0;
-			crimeIndex += murderWeight * getMurderStats(crimeDataYears[i]);
-			crimeIndex += rapeWeight * getMurderStats(crimeDataYears[i]);
-			crimeIndex += robberyWeight * getMurderStats(crimeDataYears[i]);
-			crimeIndex += assaultWeight * getMurderStats(crimeDataYears[i]);
-			crimeIndex += burglaryWeight * getMurderStats(crimeDataYears[i]);
-			crimeIndex += theftWeight * getMurderStats(crimeDataYears[i]);
-			crimeIndex += autoTheftWeight * getMurderStats(crimeDataYears[i]);
-			crimeIndex += arsonWeight * getMurderStats(crimeDataYears[i]);
-			crimeDataIndex[i] = crimeIndex;
-		} // end for i
-		for (int i = 0; i < crimeDataIndex.length; i++) {
-			index += crimeDataIndex[i];
-		} // end for i
-		if(index / crimeDataIndex.length >= 700){ // very dangerous
-			amISafeIndex = 4;
-		} else if(index / crimeDataIndex.length >= 300){ // somewhat dangerous
-			amISafeIndex = 3;
-		} else if(index / crimeDataIndex.length > 200){ // mostly safe
-			amISafeIndex = 2;
-		} else { // very safe
-			amISafeIndex = 1;
-		}
-	}
+        this.crimeDataIndex = new float[crimeDataYears.length];
+        long crimeIndex;
+        int index = 0;
+        for (int i = 0; i < crimeDataYears.length; i++) {
+            crimeIndex = 0;
+            crimeIndex += murderWeight * getMurderStats(crimeDataYears[i]);
+            crimeIndex += rapeWeight * getMurderStats(crimeDataYears[i]);
+            crimeIndex += robberyWeight * getMurderStats(crimeDataYears[i]);
+            crimeIndex += assaultWeight * getMurderStats(crimeDataYears[i]);
+            crimeIndex += burglaryWeight * getMurderStats(crimeDataYears[i]);
+            crimeIndex += theftWeight * getMurderStats(crimeDataYears[i]);
+            crimeIndex += autoTheftWeight * getMurderStats(crimeDataYears[i]);
+            crimeIndex += arsonWeight * getMurderStats(crimeDataYears[i]);
+            crimeDataIndex[i] = crimeIndex;
+        } // end for i
+        for (int i = 0; i < crimeDataIndex.length; i++) {
+            index += crimeDataIndex[i];
+        } // end for i
+        if (index / crimeDataIndex.length >= 700) { // very dangerous
+            amISafeIndex = 4;
+        } else if (index / crimeDataIndex.length >= 300) { // somewhat dangerous
+            amISafeIndex = 3;
+        } else if (index / crimeDataIndex.length > 200) { // mostly safe
+            amISafeIndex = 2;
+        } else { // very safe
+            amISafeIndex = 1;
+        }
     }
 
     public void setCity(String city) {
