@@ -90,6 +90,9 @@ public class CreateCrimeStats{
         // Get and set arson stats
         crimeStats.setNumArsons(this.numPerYear("Arson", parseIterator));
         crimeStats.setArsonStats(this.numPerYearPer100k(parseIterator));
+		
+	// set crimeDataIndex, which will internally set amISafeIndex to values 1, 2, 3 or 4.
+	crimeStats.setCrimeDataIndex();
     }
 
     // !!IMPORTANT!! : The following two functions are very specific to the html page we are scraping
