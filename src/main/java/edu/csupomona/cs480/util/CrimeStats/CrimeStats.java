@@ -297,11 +297,7 @@ public class CrimeStats {
      * Setters
      */
 
-    public void setCrimeDataIndex(float[] crimeDataIndex) {
-        this.crimeDataIndex = crimeDataIndex;
-    }
-
-    public void setAmISafeIndex() {
+    public void setCrimeDataIndex() {
         this.crimeDataIndex = new float[crimeDataYears.length];
         long crimeIndex;
         int index = 0;
