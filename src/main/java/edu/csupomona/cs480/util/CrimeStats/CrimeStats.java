@@ -18,7 +18,7 @@ public class CrimeStats {
     private String city;
     private String state;
 
-    private int amISafeIndex; // takes on values 1 through 5 with 3 being the baseline (e.g. state or national average).
+    private int amISafeIndex; // takes on values 1 (very safe), 2 (mostly safe), 3 (somewhat dangerous), and 4 (very dangerous).
 
     private int[] crimeDataYears;
     private int[] numMurders;
@@ -293,7 +293,35 @@ public class CrimeStats {
     }
 
     public void setAmISafeIndex() {
-        // TODO: calculate amISafeIndex using crimeDataIndex
+        	public void setCrimeDataIndex() {
+		this.crimeDataIndex = new float[crimeDataYears.length];
+		long crimeIndex;
+		int index = 0;
+		for (int i = 0; i < crimeDataYears.length; i++) {
+			crimeIndex = 0;
+			crimeIndex += murderWeight * getMurderStats(crimeDataYears[i]);
+			crimeIndex += rapeWeight * getMurderStats(crimeDataYears[i]);
+			crimeIndex += robberyWeight * getMurderStats(crimeDataYears[i]);
+			crimeIndex += assaultWeight * getMurderStats(crimeDataYears[i]);
+			crimeIndex += burglaryWeight * getMurderStats(crimeDataYears[i]);
+			crimeIndex += theftWeight * getMurderStats(crimeDataYears[i]);
+			crimeIndex += autoTheftWeight * getMurderStats(crimeDataYears[i]);
+			crimeIndex += arsonWeight * getMurderStats(crimeDataYears[i]);
+			crimeDataIndex[i] = crimeIndex;
+		} // end for i
+		for (int i = 0; i < crimeDataIndex.length; i++) {
+			index += crimeDataIndex[i];
+		} // end for i
+		if(index / crimeDataIndex.length >= 700){ // very dangerous
+			amISafeIndex = 4;
+		} else if(index / crimeDataIndex.length >= 300){ // somewhat dangerous
+			amISafeIndex = 3;
+		} else if(index / crimeDataIndex.length > 200){ // mostly safe
+			amISafeIndex = 2;
+		} else { // very safe
+			amISafeIndex = 1;
+		}
+	}
     }
 
     public void setCity(String city) {
