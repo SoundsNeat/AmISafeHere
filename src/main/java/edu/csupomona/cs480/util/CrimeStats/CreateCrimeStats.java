@@ -19,7 +19,7 @@ import org.jsoup.nodes.Document;
  */
 public class CreateCrimeStats{
     // the CrimeStats object to hold the crime statistics
-	private CrimeStats crimeStats;
+	CrimeStats crimeStats;
     // the available years or information offered by the www.city-data.com
     private int [] crimeDataYears;
     // number of years available
