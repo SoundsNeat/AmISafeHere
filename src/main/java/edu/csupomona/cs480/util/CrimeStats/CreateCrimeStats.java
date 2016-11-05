@@ -3,7 +3,7 @@ package edu.csupomona.cs480.util.CrimeStats;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.jsoup.Jsoup;  
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 /**
@@ -14,14 +14,14 @@ import org.jsoup.nodes.Document;
  */
 
 /**
- *  This class scrapes www.city-data.com for crime statistics based on the specified city and state
- *  Much of the code written in this class are specific to this website
+ * This class scrapes www.city-data.com for crime statistics based on the specified city and state
+ * Much of the code written in this class are specific to this website
  */
-public class CreateCrimeStats{
+public class CreateCrimeStats {
     // the CrimeStats object to hold the crime statistics
-	private CrimeStats crimeStats;
+    private CrimeStats crimeStats;
     // the available years or information offered by the www.city-data.com
-    private int [] crimeDataYears;
+    private int[] crimeDataYears;
     // number of years available
     private int numYears;
     // the html page to be scraped
@@ -30,22 +30,23 @@ public class CreateCrimeStats{
     /**
      * A constructor taking the city and state name and acquiring the crime
      * statistics for that city
-     * @param city city name
+     *
+     * @param city  city name
      * @param state state name
      * @throws IOException from the Jsoup.connect function call
      */
-	public CreateCrimeStats(String city, String state) throws IOException{
+    public CreateCrimeStats(String city, String state) throws IOException {
         // create a CrimeStats object for the chosen city
-    	crimeStats = new CrimeStats(city, state);
+        crimeStats = new CrimeStats(city, state);
 
         // ensure a multiple word city is url friendly
-    	city = city.replaceAll(" ", "-");
+        city = city.replaceAll(" ", "-");
         // ensure a multiple word state is url friendly
         state = state.replaceAll(" ", "-");
         // get the html page for the desired city
         Document doc = Jsoup.connect("http://www.city-data.com/city/" + city + "-" + state + ".html").get();
         html = doc.toString().replaceAll("N/A", "-0"); // handles cases where there is no data availale
-	
+
         /**
          * iterator we will use to parse through the html
          * we are using an AtomicInteger, so we can essentially pass an int by reference and remember
@@ -90,9 +91,9 @@ public class CreateCrimeStats{
         // Get and set arson stats
         crimeStats.setNumArsons(this.numPerYear("Arson", parseIterator));
         crimeStats.setArsonStats(this.numPerYearPer100k(parseIterator));
-		
-	// set crimeDataIndex, which will internally set amISafeIndex to values 1, 2, 3 or 4.
-	crimeStats.setCrimeDataIndex();
+
+        // set crimeDataIndex, which will internally set amISafeIndex to values 1, 2, 3 or 4.
+        crimeStats.setCrimeDataIndex();
     }
 
     // !!IMPORTANT!! : The following two functions are very specific to the html page we are scraping
@@ -100,13 +101,14 @@ public class CreateCrimeStats{
     /**
      * initialize the html scrape by evaluating how many years of data are available
      * set the available years to our crimeStats object
+     *
      * @return an int representing the position in which we left off
      */
     private int initScrape() {
         // parse the years of crime data that are available
         int crimeData = html.indexOf("Crime rates in " + crimeStats.getCity() + " by Year") - 10;
         int crimeDataYearsBegin = html.indexOf("\"", crimeData) + 1;
-        int crimeDataYearsEnd = html.indexOf("\"", crimeDataYearsBegin );
+        int crimeDataYearsEnd = html.indexOf("\"", crimeDataYearsBegin);
         this.numYears = Integer.parseInt(html.substring(crimeDataYearsBegin, crimeDataYearsEnd)) - 1;
         this.crimeDataYears = new int[this.numYears];
 
@@ -125,21 +127,22 @@ public class CreateCrimeStats{
 
     /**
      * Get the number of crimes in of the city for each year of available data
-     * @param crime String representing the crime to be scraped
+     *
+     * @param crime         String representing the crime to be scraped
      * @param parseIterator the current state of the parse iterator used to scrape the page
      * @return an array used to return the crime data values
      */
-    private int [] numPerYear(String crime, AtomicInteger parseIterator) {
+    private int[] numPerYear(String crime, AtomicInteger parseIterator) {
         int startData = html.indexOf(crime, parseIterator.intValue());
         int endData = 0;
-        int [] numCrimes = new int[this.numYears];
+        int[] numCrimes = new int[this.numYears];
         int data;
 
         try {
             for (int i = 0; i < this.numYears; i++) {
                 startData = html.indexOf("<td>", startData) + 4;
                 endData = html.indexOf("</td>", startData);
-                data = Integer.parseInt(html.substring(startData, endData).replaceAll(",",""));
+                data = Integer.parseInt(html.substring(startData, endData).replaceAll(",", ""));
                 numCrimes[i] = data;
             }
             parseIterator.set(endData);
@@ -152,13 +155,14 @@ public class CreateCrimeStats{
 
     /**
      * Get the number of crimes in of the city for each year of available data per 100,000 citizens
+     *
      * @param parseIterator the current state of the parse iterator used to scrape the page
      * @return an array used to return the crime data values
      */
-    private float [] numPerYearPer100k(AtomicInteger parseIterator) {
+    private float[] numPerYearPer100k(AtomicInteger parseIterator) {
         int startStats = html.indexOf("</td>", parseIterator.intValue() + 5);
         int endStats = 0;
-        float [] stats = new float[this.numYears];
+        float[] stats = new float[this.numYears];
         float crimeStat;
 
         try {
@@ -184,7 +188,7 @@ public class CreateCrimeStats{
         return crimeStats;
     }
 
-    public int [] getCrimeDataYears() {
+    public int[] getCrimeDataYears() {
         return crimeDataYears;
     }
 }
