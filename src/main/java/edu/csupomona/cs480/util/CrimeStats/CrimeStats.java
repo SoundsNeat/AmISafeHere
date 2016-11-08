@@ -63,7 +63,6 @@ public class CrimeStats {
     /**
      * Getters
      */
-
     public int getCrimeDataYear(int index) {
         if (index < 0 || index > crimeDataYears.length) {
             throw new IndexOutOfBoundsException("index passed: " + index +

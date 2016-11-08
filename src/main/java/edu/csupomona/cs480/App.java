@@ -1,7 +1,6 @@
 package edu.csupomona.cs480;
 
-import edu.csupomona.cs480.data.provider.*;
-
+import edu.csupomona.cs480.util.CrimeStats.CrimeStats;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -15,16 +14,10 @@ import java.util.Random;
 @ComponentScan
 public class App {
 
-    /**
-     * This is a good example of how Spring instantiates
-     * objects. The instances generated from this method
-     * will be used in this project, where the Autowired
-     * annotation is applied.
-     */
     @Bean
-    public UserManager userManager() {
-        UserManager userManager = new FSUserManager();
-        return userManager;
+    public CrimeStats crimeStats() {
+        CrimeStats crimeStats = null; //new CrimeStats();
+        return crimeStats;
     }
 
     @Bean
@@ -40,7 +33,6 @@ public class App {
      * you cannot put extra main method when building your project.
      */
     public static void main(String[] args) throws Exception {
-        // Run Spring Boot
         SpringApplication.run(App.class, args);
     }
 }

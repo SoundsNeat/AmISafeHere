@@ -46,7 +46,7 @@ public class CityCrimeController {
     @RequestMapping(value = "/getCityStatistics", method = RequestMethod.POST)
     String getCityStatistics(@RequestParam("location") String location) throws JsonParseException, IOException {
         String[] address = location.replaceAll("_", " ").split("-");
-        // return crimeStatisticsApi(address[0], address[1]);
+         //return crimeStatisticsApi(address[0], address[1]);
         String result = "{"
                 + "\"city\":\"" + address[0] + "\","
                 + "\"state\":\"" + address[1] + "\","
