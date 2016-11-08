@@ -50,7 +50,14 @@ public class CrimeStats {
     private double arsonWeight;
 
     /**
-     * Create an instance of CrimeState using city and state name strings
+     * Creates an instance of CrimeStats with no initialized data
+     */
+    public CrimeStats(){
+
+    }
+
+    /**
+     * Create an instance of CrimeStats using city and state name strings
      *
      * @param city
      * @param state
