@@ -136,47 +136,87 @@
                         <div class="row" id="cityStateTitle" ng-model="result">
                             <div class="col">
                                 <!-- Title -->
-                                <div class="row">
+                                <div class="row" id="titleCityState">
                                     <h3>{{result.city}}, {{result.state}}</h3>
                                 </div>
                                 <!-- Success -->
-                                <div class="row" id="displayResult">
-                                    <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                        <img src="http://vignette3.wikia.nocookie.net/ben-and-toads-contest/images/e/e3/Map_of_United_States.jpg"
-                                             alt="United States"
-                                             class="img-fluid rounded state-img" />
-                                    </div>
-                                    <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                        <dl class="dl-horizontal">
-                                            <dt>
+                                <div class="" id="displayResult">
+                                    <div class="row">
+                                        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <img src="http://vignette3.wikia.nocookie.net/ben-and-toads-contest/images/e/e3/Map_of_United_States.jpg"
+                                                 alt="United States"
+                                                 class="img-fluid rounded state-img" />
+                                        </div>
+                                        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <dl class="dl-horizontal">
+                                                <dt>
                                             <span>
                                                 Safety Index:
                                             </span>
-                                            </dt>
-                                            <dd>
+                                                </dt>
+                                                <dd>
                                             <span>
                                                 {{result.index}}
                                             </span>
-                                            </dd>
-                                            <dt>
+                                                </dd>
+                                                <dt>
                                             <span>
                                                 State Average:
                                             </span>
-                                            </dt>
-                                            <dd>
+                                                </dt>
+                                                <dd>
                                             <span>
                                                 {{result.average}}
                                             </span>
-                                            </dd>
-                                        </dl>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <dl class="dl-horizotal">
+                                                <dt>
+                                                    <span>
+                                                        Years:
+                                                    </span>
+                                                </dt>
+                                                <dd>
+                                                    <span>
+                                                        {{result.years}}
+                                                    </span>
+                                                </dd>
+                                                <dt>
+                                                    <span>
+                                                        Murders:
+                                                    </span>
+                                                </dt>
+                                                <dd>
+                                                    <span>
+                                                        {{result.years}}
+                                                    </span>
+                                                </dd>
+                                                <dt>
+                                                    <span>
+                                                        Assaults:
+                                                    </span>
+                                                </dt>
+                                                <dd>
+                                                    <span>
+                                                        {{result.years}}
+                                                    </span>
+                                                </dd>
+                                            </dl>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- Failure -->
                                 <div class="row" id="noResultError">
-                                    <p>We are <em>unable to find</em> the results for {{result.city}}, {{result.state}} in our database.</p>
-                                    <p>We <strong>apologize</strong> for the <em>inconvenience</em>.</p>
-                                    <p>Please report this issue to us by contacting us if you have time.</p>
-                                    <p>Thank you.</p>
+                                    <div class="col">
+                                        <p>We are <em>unable to find</em> the results for {{result.city}}, {{result.state}} in our database.</p>
+                                        <p>We <strong>apologize</strong> for the <em>inconvenience</em>.</p>
+                                        <p>Please report this issue to us by contacting us if you have time.</p>
+                                        <p>Thank you.</p>
+                                    </div>
                                 </div>
                             </div>
 

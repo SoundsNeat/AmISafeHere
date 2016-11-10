@@ -3,6 +3,7 @@ package edu.csupomona.cs480.util.CrimeStats;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -28,14 +29,17 @@ public class CreateCrimeStats {
     private String html;
 
     /**
-     * A constructor taking the city and state name and acquiring the crime
+     * A execute method taking the city and state name and acquiring the crime
      * statistics for that city
      *
      * @param city  city name
      * @param state state name
      * @throws IOException from the Jsoup.connect function call
      */
-    public CreateCrimeStats(String city, String state) throws IOException {
+    public void execute(String city, String state) throws IOException {
+        if (StringUtils.isBlank(city) || StringUtils.isBlank(state)) {
+            throw new RuntimeException("City or State must not be blank.");
+        }
         // create a CrimeStats object for the chosen city
         crimeStats = new CrimeStats(city, state);
 
@@ -95,7 +99,6 @@ public class CreateCrimeStats {
         // set crimeDataIndex, which will internally set amISafeIndex to values 1, 2, 3 or 4.
         crimeStats.setCrimeDataIndex();
     }
-
     // !!IMPORTANT!! : The following two functions are very specific to the html page we are scraping
 
     /**

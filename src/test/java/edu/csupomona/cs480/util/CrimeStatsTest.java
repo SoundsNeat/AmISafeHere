@@ -3,6 +3,7 @@ package edu.csupomona.cs480.util;
 import edu.csupomona.cs480.util.CrimeStats.CreateCrimeStats;
 import edu.csupomona.cs480.util.CrimeStats.CrimeStats;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -15,10 +16,14 @@ import java.io.IOException;
 
 public class CrimeStatsTest {
     CreateCrimeStats ccs;
+    @Before
+    public void init() {
+        ccs = new CreateCrimeStats();
+    }
 
     @Test
     public void CreateCrimeStatsTest1() throws IOException {
-        ccs = new CreateCrimeStats("Pomona", "California");
+        ccs.execute("Pomona", "California");
         CrimeStats city = ccs.getCrimeStats();
 
         Assert.assertTrue(city.getCity().equals("Pomona"));
@@ -32,7 +37,7 @@ public class CrimeStatsTest {
 
     @Test
     public void CreateCrimeStatsTest2() throws IOException {
-        ccs = new CreateCrimeStats("Lake Elsinore", "California");
+        ccs.execute("Lake Elsinore", "California");
         CrimeStats city = ccs.getCrimeStats();
 
         Assert.assertTrue(city.getCity().equals("Lake Elsinore"));
@@ -43,7 +48,7 @@ public class CrimeStatsTest {
 
     @Test
     public void CreateCrimeStatsTest3() throws IOException {
-        ccs = new CreateCrimeStats("New York", "New York");
+        ccs.execute("New York", "New York");
         CrimeStats city = ccs.getCrimeStats();
 
         Assert.assertTrue(city.getCity().equals("New York"));
@@ -52,4 +57,48 @@ public class CrimeStatsTest {
         Assert.assertEquals(-1, city.getNumArsons(2014));
     }
 
+    @Test(expected = RuntimeException.class)
+    public void nullCreateCrimeStatsTest() throws IOException {
+        ccs.execute(null, null);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void nullCityCreateCrimeStatsTest() throws IOException {
+        ccs.execute(null, "CA");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void nullStateCreateCrimeStatsTest() throws IOException {
+        ccs.execute("Pomona", null);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void emptyCreateCrimeStatsTest() throws IOException {
+        ccs.execute("", "");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void emptyCityCreateCrimeStatsTest() throws IOException {
+        ccs.execute("", "CA");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void emptyStateCreateCrimeStatsTest() throws IOException {
+        ccs.execute("Pomona", "");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void spaceCreateCrimeStatsTest() throws IOException {
+        ccs.execute("  ", "  ");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void spaceCityCreateCrimeStatsTest() throws IOException {
+        ccs.execute("  ", "CA");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void spaceStateCreateCrimeStatsTest() throws IOException {
+        ccs.execute("Pomona", "  ");
+    }
 }
