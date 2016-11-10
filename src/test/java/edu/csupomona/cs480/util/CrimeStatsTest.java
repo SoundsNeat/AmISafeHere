@@ -2,6 +2,7 @@ package edu.csupomona.cs480.util;
 
 import edu.csupomona.cs480.util.CrimeStats.CreateCrimeStats;
 import edu.csupomona.cs480.util.CrimeStats.CrimeStats;
+import edu.csupomona.cs480.util.CrimeStats.ICreateCrimeStats;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +16,7 @@ import java.io.IOException;
  */
 
 public class CrimeStatsTest {
-    CreateCrimeStats ccs;
+    ICreateCrimeStats ccs;
     @Before
     public void init() {
         ccs = new CreateCrimeStats();

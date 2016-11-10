@@ -18,7 +18,7 @@ import org.jsoup.nodes.Document;
  * This class scrapes www.city-data.com for crime statistics based on the specified city and state
  * Much of the code written in this class are specific to this website
  */
-public class CreateCrimeStats {
+public class CreateCrimeStats implements ICreateCrimeStats {
     // the CrimeStats object to hold the crime statistics
     private CrimeStats crimeStats;
     // the available years or information offered by the www.city-data.com
@@ -36,6 +36,7 @@ public class CreateCrimeStats {
      * @param state state name
      * @throws IOException from the Jsoup.connect function call
      */
+    @Override
     public void execute(String city, String state) throws IOException {
         if (StringUtils.isBlank(city) || StringUtils.isBlank(state)) {
             throw new RuntimeException("City or State must not be blank.");
