@@ -2,21 +2,19 @@ package edu.csupomona.cs480.util.CrimeStats;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 /**
+ * This class scrapes www.city-data.com for crime statistics based on the specified city and state
+ * <p>
+ * Much of the code written in this class are specific to this website
+ * <p>
  * @author Jonathan T. Fetzer
  * clean-up/documentation: Connor A. Haskins
  * class: CS 480, Cal Poly Pomona
  * group: Sounds Neat
- */
-
-/**
- * This class scrapes www.city-data.com for crime statistics based on the specified city and state
- * Much of the code written in this class are specific to this website
  */
 public class CreateCrimeStats implements ICreateCrimeStats {
     // the CrimeStats object to hold the crime statistics
@@ -31,7 +29,14 @@ public class CreateCrimeStats implements ICreateCrimeStats {
     /**
      * A execute method taking the city and state name and acquiring the crime
      * statistics for that city
-     *
+     * <p>
+     * NOTE:
+     * <p>
+     * iterator we will use to parse through the html
+     * we are using an AtomicInteger, so we can essentially pass an int by reference and remember
+     * it's value as we scrape through the html
+     * We want to start the parsing iterator at the end of  initial scrape
+     * <p>
      * @param city  city name
      * @param state state name
      * @throws IOException from the Jsoup.connect function call
@@ -48,23 +53,16 @@ public class CreateCrimeStats implements ICreateCrimeStats {
         city = city.replaceAll(" ", "-");
         // ensure a multiple word state is url friendly
         state = state.replaceAll(" ", "-");
-        // get the html page for the desired city
-        Document doc = Jsoup.connect("http://www.city-data.com/city/" + city + "-" + state + ".html").get();
-        html = doc.toString().replaceAll("N/A", "-0"); // handles cases where there is no data availale
-
-        /**
-         * iterator we will use to parse through the html
-         * we are using an AtomicInteger, so we can essentially pass an int by reference and remember
-         * it's value as we scrape through the html
-         * We want to start the parsing iterator at the end of  initial scrape
-         */
+        getHtmlData(city, state);
         AtomicInteger parseIterator = new AtomicInteger(this.initScrape());
+        setVariousCrimeCategories(parseIterator);
+    }
 
-        /**
-         * Scrape the page for all crime stats per year and per year per 100,000 citizens
-         * !!IMPORTANT!! The order of these function calls DO matter
-         */
-
+    /**
+     * Scrape the page for all crime stats per year and per year per 100,000 citizens
+     * !!IMPORTANT!! The order of these function calls DO matter
+     */
+    private void setVariousCrimeCategories(AtomicInteger parseIterator) {
         // Get and set murder stats
         crimeStats.setNumMurders(this.numPerYear("Murders", parseIterator));
         crimeStats.setMurderStats(this.numPerYearPer100k(parseIterator));
@@ -100,6 +98,18 @@ public class CreateCrimeStats implements ICreateCrimeStats {
         // set crimeDataIndex, which will internally set amISafeIndex to values 1, 2, 3 or 4.
         crimeStats.setCrimeDataIndex();
     }
+
+    /**
+     * get the html page for the desired city
+     * @param city error checked City Name
+     * @param state error checked State Name
+     * @throws IOException JSoup requirement
+     */
+    private void getHtmlData(String city, String state) throws IOException {
+        Document doc = Jsoup.connect("http://www.city-data.com/city/" + city + "-" + state + ".html").get();
+        html = doc.toString().replaceAll("N/A", "-0"); // handles cases where there is no data availale
+    }
+
     // !!IMPORTANT!! : The following two functions are very specific to the html page we are scraping
 
     /**
