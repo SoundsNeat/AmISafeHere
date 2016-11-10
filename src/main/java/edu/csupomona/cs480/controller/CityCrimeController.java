@@ -3,6 +3,7 @@ package edu.csupomona.cs480.controller;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.csupomona.cs480.util.CrimeStats.CreateCrimeStats;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,13 +11,13 @@ import java.io.IOException;
 
 /**
  * @author Wai Phyo
- * Testing web hook
  */
 
 
 @RestController
 public class CityCrimeController {
-
+    @Autowired
+    private CreateCrimeStats createCrimeStats;
     /**
      *
      * @param location format: "City-State-Country" NOTE: '_' is replaced with space. Need to replace it back
@@ -46,6 +47,11 @@ public class CityCrimeController {
     @RequestMapping(value = "/getCityStatistics", method = RequestMethod.POST)
     String getCityStatistics(@RequestParam("location") String location) throws JsonParseException, IOException {
         String[] address = location.replaceAll("_", " ").split("-");
+        if (address.length != 3) {
+            throw new RuntimeException("Incorrect format Type");
+        }
+        createCrimeStats.execute(address[0], address[1]);
+        System.out.println(createCrimeStats.getCrimeStats().toJson());
          //return crimeStatisticsApi(address[0], address[1]);
         String result = "{"
                 + "\"city\":\"" + address[0] + "\","

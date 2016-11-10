@@ -16,7 +16,7 @@ public class App {
 
     @Bean
     public CrimeStats crimeStats() {
-        CrimeStats crimeStats = null; //new CrimeStats();
+        CrimeStats crimeStats = new CrimeStats();
         return crimeStats;
     }
 
