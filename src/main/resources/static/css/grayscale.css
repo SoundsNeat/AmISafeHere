@@ -315,3 +315,8 @@ body {
 .modal {
     color: #333;
 }
+
+.state-img {
+    max-width: 80%;
+    max-height: auto;
+}

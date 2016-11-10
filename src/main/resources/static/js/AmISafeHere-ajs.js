@@ -1,18 +1,21 @@
 var amISafeHere = angular.module('AmISafeHere', []);
-var googleMaps = "http://maps.googleapis.com/maps/api/geocode/json?latlng=";
 
 amISafeHere.controller('CityCtrl', function ($scope, $http) {
+    var googleMapsPrefix = "http://maps.googleapis.com/maps/api/geocode/json?latlng=";
+    var googleSensorTrue = "&sensor=true";
+    var googleResultIndex = 0;  // detail address format from google
+    var googleArrayCityIndex = 1;
+    var googleArrayStateIndex = 3;
+    var googleArrayCountryIndex = 4;
     $scope.SearchCityWithCoordinates = function () {
-        console.info("with Jenkins 0.3");
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var location = "";
-                $http.post(googleMaps + position.coords.latitude + "," + position.coords.longitude + "&sensor=true")
+                $http.post(googleMapsPrefix + position.coords.latitude + "," + position.coords.longitude + googleSensorTrue)
                 .success(function(result){
-                    location = result.results[0].address_components[3].long_name + "-" +
-                               result.results[0].address_components[5].long_name + "-" +
-                               result.results[0].address_components[6].long_name;
-                    console.info("used google map: " + location);
+                    location = result.results[googleResultIndex].address_components[googleArrayCityIndex].long_name + "-" +
+                               result.results[googleResultIndex].address_components[googleArrayStateIndex].long_name + "-" +
+                               result.results[googleResultIndex].address_components[googleArrayCountryIndex].long_name;
                     $http.post("getCityStatistics" + "?location=" + reformatAddress(location))
                     .success(function(result){
                         console.info("auto");
