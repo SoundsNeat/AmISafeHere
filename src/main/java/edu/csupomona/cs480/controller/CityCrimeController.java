@@ -50,8 +50,8 @@ public class CityCrimeController {
         if (address.length != 3) {
             throw new RuntimeException("Incorrect format Type");
         }
-        createCrimeStats.execute(address[0], address[1]);
-        System.out.println(createCrimeStats.getCrimeStats().toJson());
+        //createCrimeStats.execute(address[0], address[1]);
+        //System.out.println(createCrimeStats.getCrimeStats().toJson());
          //return crimeStatisticsApi(address[0], address[1]);
         String result = "{"
                 + "\"city\":\"" + address[0] + "\","

@@ -1,5 +1,6 @@
 package edu.csupomona.cs480;
 
+import edu.csupomona.cs480.util.CrimeStats.CreateCrimeStats;
 import edu.csupomona.cs480.util.CrimeStats.CrimeStats;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -15,8 +16,8 @@ import java.util.Random;
 public class App {
 
     @Bean
-    public CrimeStats crimeStats() {
-        CrimeStats crimeStats = new CrimeStats();
+    public CreateCrimeStats crimeStats() {
+        CreateCrimeStats crimeStats = new CreateCrimeStats();
         return crimeStats;
     }
 
