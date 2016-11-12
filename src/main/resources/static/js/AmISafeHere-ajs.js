@@ -4,15 +4,18 @@ amISafeHere.controller('CityCtrl', function ($scope, $http) {
     var googleMapsPrefix = "http://maps.googleapis.com/maps/api/geocode/json?latlng=";
     var googleSensorTrue = "&sensor=true";
     var googleResultIndex = 0;  // detail address format from google
-    var googleArrayCityIndex = 1;
-    var googleArrayStateIndex = 3;
-    var googleArrayCountryIndex = 4;
+    var googleArrayCityIndex = 3;
+    var googleArrayStateIndex = 5;
+    var googleArrayCountryIndex = 6;
     $scope.SearchCityWithCoordinates = function () {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var location = "";
-                $http.post(googleMapsPrefix + position.coords.latitude + "," + position.coords.longitude + googleSensorTrue)
+                var googleUrl = googleMapsPrefix + position.coords.latitude + "," + position.coords.longitude + googleSensorTrue;
+                console.info(googleUrl);
+                $http.post(googleUrl)
                 .success(function(result){
+                    console.dir(result);
                     location = result.results[googleResultIndex].address_components[googleArrayCityIndex].long_name + "-" +
                                result.results[googleResultIndex].address_components[googleArrayStateIndex].long_name + "-" +
                                result.results[googleResultIndex].address_components[googleArrayCountryIndex].long_name;

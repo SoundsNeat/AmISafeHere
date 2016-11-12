@@ -15,18 +15,18 @@ function loadModal() {
 function parseServerConnectError() {
     $('#serverError').show();
     $('#noGpsError').hide();
-    $('#resultModalBody').hide();
+    $('#cityStateTitle').hide();
 
 }
 
 function parseNoGpsError() {
     $('#noGpsError').show();
-    $('#resultModalBody').hide();
+    $('#cityStateTitle').hide();
     $('#serverError').hide();
 }
 
 function parseOutput(result) {
-    $('#resultModalBody').show();
+    $('#cityStateTitle').show();
     $('#noGpsError').hide();
     $('#serverError').hide();
     if (result.result) {
