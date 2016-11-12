@@ -105,9 +105,15 @@ public class CreateCrimeStats implements ICreateCrimeStats {
      * @param state error checked State Name
      * @throws IOException JSoup requirement
      */
-    private void getHtmlData(String city, String state) throws IOException {
-        Document doc = Jsoup.connect("http://www.city-data.com/city/" + city + "-" + state + ".html").get();
-        html = doc.toString().replaceAll("N/A", "-0"); // handles cases where there is no data availale
+    private void getHtmlData(String city, String state) {
+        try {
+            Document doc = Jsoup.connect("http://www.city-data.com/city/" + city + "-" + state + ".html").get();
+            html = doc.toString().replaceAll("N/A", "-0"); // handles cases where there is no data availale
+            crimeStats.setResult(true);
+        } catch (IOException e) {
+            crimeStats.setResult(false);
+        }
+
     }
 
     // !!IMPORTANT!! : The following two functions are very specific to the html page we are scraping

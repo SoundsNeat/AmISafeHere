@@ -17,7 +17,7 @@ public class CrimeStats {
 
     private String city;
     private String state;
-
+    private boolean result;
     private int amISafeIndex; // takes on values 1 (very safe), 2 (mostly safe), 3 (somewhat dangerous), and 4 (very dangerous).
 
     private int[] crimeDataYears;
@@ -235,6 +235,10 @@ public class CrimeStats {
         }
     }
 
+    public boolean getResult() {
+        return result;
+    }
+
     public int getNumMurders(int year) {
         if (numMurders != null) {
             return numMurders[getYearIndex(year)];
@@ -335,6 +339,10 @@ public class CrimeStats {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public void setResult(final boolean result) {
+        this.result = result;
     }
 
     public void setState(String state) {
