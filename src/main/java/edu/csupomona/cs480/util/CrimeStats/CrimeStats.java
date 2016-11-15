@@ -19,7 +19,7 @@ public class CrimeStats {
     private String state;
     private boolean result;
     private int amISafeIndex; // takes on values 1 (very safe), 2 (mostly safe), 3 (somewhat dangerous), and 4 (very dangerous).
-
+   
     private int[] crimeDataYears;
     private int[] numMurders;
     private int[] numRapes;
@@ -40,14 +40,14 @@ public class CrimeStats {
     private float[] arsonStats;
     private float[] crimeDataIndex;
 
-    private double murderWeight;
-    private double rapeWeight;
-    private double robberyWeight;
-    private double assaultWeight;
-    private double burglaryWeight;
-    private double theftWeight;
-    private double autoTheftWeight;
-    private double arsonWeight;
+	private int murderWeight = 10;
+	private int rapeWeight = 8;
+	private int robberyWeight = 2;
+	private int assaultWeight = 5;
+	private int burglaryWeight = 3;
+	private int theftWeight = 1;
+	private int autoTheftWeight = 1;
+	private int arsonWeight = 3;
 
     /**
      * Creates an instance of CrimeStats with no initialized data
