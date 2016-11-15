@@ -40,14 +40,14 @@ public class CrimeStats {
     private float[] arsonStats;
     private float[] crimeDataIndex;
 
-	private int murderWeight = 10;
-	private int rapeWeight = 8;
-	private int robberyWeight = 2;
-	private int assaultWeight = 5;
-	private int burglaryWeight = 3;
-	private int theftWeight = 1;
-	private int autoTheftWeight = 1;
-	private int arsonWeight = 3;
+    private int murderWeight = 10;
+    private int rapeWeight = 8;
+    private int robberyWeight = 2;
+    private int assaultWeight = 5;
+    private int burglaryWeight = 3;
+    private int theftWeight = 1;
+    private int autoTheftWeight = 1;
+    private int arsonWeight = 3;
 
     /**
      * Creates an instance of CrimeStats with no initialized data
