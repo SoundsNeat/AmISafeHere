@@ -62,7 +62,7 @@ public class CityStatsTest {
 
         String jsonString = city.toJson();
         StringBuilder correctJSONFormat = new StringBuilder();
-        correctJSONFormat.append("{\"city\":\"Pomona\",\"state\":\"California\",\"success\":true,\"amISafeIndex\":1,\"crimeStats\":[");
+        correctJSONFormat.append("{\"city\":\"Pomona\",\"state\":\"California\",\"success\":true,\"amISafeIndex\":4,\"crimeStats\":[");
         correctJSONFormat.append("{\"type\":\"murder\",\"totalCrimes\":[18,17,21,21,19,27,20,17,16,11,17,29,18],\"perHundredThousand\":[11.6,11.0,13.5,13.4,12.2,17.4,13.1,11.1,10.5,7.3,11.2,19.2,11.8]},");
         correctJSONFormat.append("{\"type\":\"rape\",\"totalCrimes\":[77,49,50,44,17,32,37,46,37,54,63,31,44],\"perHundredThousand\":[49.7,31.6,32.1,28.1,11.0,20.6,24.2,30.0,24.2,35.8,41.6,20.5,29.0]},");
         correctJSONFormat.append("{\"type\":\"robbery\",\"totalCrimes\":[448,422,349,385,464,485,463,344,323,339,377,295,241],\"perHundredThousand\":[289.1,272.0,223.8,246.0,299.0,312.6,302.2,224.5,211.6,224.8,248.8,194.9,158.7]},");
