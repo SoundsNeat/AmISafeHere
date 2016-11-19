@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>Plotly</title>
+		<!-- Plotly.js -->
+		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	</head>
+	<body>
+		<p>
+			Adelanto, California - 
+		</p>
+
+		<!-- Plots go in blank <div> elements. 
+			You can size them in the plot layout,
+			or give the div a size as shown here.
+		-->
+		<div id="myDiv" style="width: 480px; height: 400px;"><!-- Plotly chart will be drawn inside this DIV --></div>
+		<div id="myDiv2" style="width: 480px; height: 400px;"><!-- Plotly chart will be drawn inside this DIV --></div>
+		<div id="myDiv3" style="width: 480px; height: 400px;"><!-- Plotly chart will be drawn inside this DIV --></div>
+
+		<script>
+			
+			console.log( Plotly.BUILD );
+			
+			var data = [{
+				x: ['Murders', 'Rapes', 'Roberies', 'Assaults', 'Thefts', 'Auto Thefts', 'Arsons'],
+				y: [151.0,149.0,857.0,131.0,233.0],
+				name: 'Adelanto',
+				type: 'bar'
+			 }];
+			 
+			 var layout = {
+			  title: '2006 Adelanto Crime',
+			  xaxis: {
+				title: 'Crimes'
+			  },
+			  yaxis: {
+				title: 'Incidents'
+			  }
+			};
+
+			Plotly.newPlot('myDiv', data, layout);
+			 //---------------------------------
+			 var trace1 = {
+			  x: ['Murders', 'Rapes', 'Roberies', 'Assaults', 'Thefts', 'Auto Thefts', 'Arsons'],
+			  y: [2, 14, 35, 85, 305, 149, 7],
+			  name: 'Adelanto',
+			  type: 'bar'
+			};
+
+			var trace2 = {
+			  x: ['Murders', 'Rapes', 'Roberies', 'Assaults', 'Thefts', 'Auto Thefts', 'Arsons'],
+			  y: [2,18,53,139,866,215,33],
+			  name: 'Apple Valley',
+			  type: 'bar'
+			};
+
+			var data = [trace1, trace2];
+			
+			var layout = {
+			  title: 'City Crime Comparison Bar Graph',
+			  barmode: 'group'
+			};
+
+			Plotly.newPlot('myDiv2', data, layout);
+			
+			//------------------------------------
+			var trace1 = {
+			  x: ['Murders', 'Rapes', 'Roberies', 'Assaults', 'Thefts', 'Auto Thefts', 'Arsons'],
+			  y: [2, 14, 35, 85, 305, 149, 7],
+			  mode: 'lines+markers',
+			  name: 'Adelanto'
+			};
+
+			var trace2 = {
+			  x: ['Murders', 'Rapes', 'Roberies', 'Assaults', 'Thefts', 'Auto Thefts', 'Arsons'],
+			  y: [2, 18, 53, 139, 866, 215, 33],
+			  mode: 'lines+markers',
+			  name: 'Apple Valley'
+			};
+
+			var trace3 = {
+			  x: ['Murders', 'Rapes', 'Roberies', 'Assaults', 'Thefts', 'Auto Thefts', 'Arsons'],
+			  y: [43, 104, 811, 1170, 4405, 2464, 120],
+			  mode: 'lines+markers',
+			  name: 'San Bernardino'
+			};
+
+			var data = [trace1, trace2, trace3];
+
+			var layout = {
+			  title: 'City Crime Comparison Line Graph',
+			  xaxis: {
+				title: 'Crimes'
+			  },
+			  yaxis: {
+				title: 'Incidents'
+			  }
+			};
+
+			Plotly.newPlot('myDiv3', data, layout);
+
+		</script>
+		
+	</body>
+</html>
