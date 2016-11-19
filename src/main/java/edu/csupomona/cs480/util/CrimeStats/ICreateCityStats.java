@@ -5,8 +5,8 @@ import java.io.IOException;
 /**
  * @author william
  */
-public interface ICreateCrimeStats {
+public interface ICreateCityStats {
     public void execute(String city, String state) throws IOException;
-    public CrimeStats getCrimeStats();
-    public int[] getCrimeDataYears();
+    public CityStats getCityStats();
+    public int [] getCityDataYears();
 }

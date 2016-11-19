@@ -16,9 +16,9 @@ import org.jsoup.nodes.Document;
  * class: CS 480, Cal Poly Pomona
  * group: Sounds Neat
  */
-public class CreateCrimeStats implements ICreateCrimeStats {
-    // the CrimeStats object to hold the crime statistics
-    private CrimeStats crimeStats;
+public class CreateCityStats implements ICreateCityStats {
+    // the CityStats object to hold the crime statistics
+    private CityStats cityStats;
     // the available years or information offered by the www.city-data.com
     private int[] crimeDataYears;
     // number of years available
@@ -46,8 +46,8 @@ public class CreateCrimeStats implements ICreateCrimeStats {
         if (StringUtils.isBlank(city) || StringUtils.isBlank(state)) {
             throw new RuntimeException("City or State must not be blank.");
         }
-        // create a CrimeStats object for the chosen city
-        crimeStats = new CrimeStats(city, state);
+        // create a CityStats object for the chosen city
+        cityStats = new CityStats(city, state);
 
         // ensure a multiple word city is url friendly
         city = city.replaceAll(" ", "-");
@@ -63,40 +63,40 @@ public class CreateCrimeStats implements ICreateCrimeStats {
      * !!IMPORTANT!! The order of these function calls DO matter
      */
     private void setVariousCrimeCategories(AtomicInteger parseIterator) {
-        // Get and set murder stats
-        crimeStats.setNumMurders(this.numPerYear("Murders", parseIterator));
-        crimeStats.setMurderStats(this.numPerYearPer100k(parseIterator));
+        // Get and set murder state
+        cityStats.getCrimeStat(CityStats.MURDER_INDEX).setTotalCrimes(this.numPerYear("Murders", parseIterator));
+        cityStats.getCrimeStat(CityStats.MURDER_INDEX).setPerHundredThousand(this.numPerYearPer100k(parseIterator));
 
         // Get and set rape stats
-        crimeStats.setNumRapes(this.numPerYear("Rapes", parseIterator));
-        crimeStats.setRapeStats(this.numPerYearPer100k(parseIterator));
+        cityStats.getCrimeStat(CityStats.RAPE_INDEX).setTotalCrimes(this.numPerYear("Rapes", parseIterator));
+        cityStats.getCrimeStat(CityStats.RAPE_INDEX).setPerHundredThousand(this.numPerYearPer100k(parseIterator));
 
         // Get and set robbery stats
-        crimeStats.setNumRobberies(this.numPerYear("Robberies", parseIterator));
-        crimeStats.setRobberyStats(this.numPerYearPer100k(parseIterator));
+        cityStats.getCrimeStat(CityStats.ROBBERY_INDEX).setTotalCrimes(this.numPerYear("Robberies", parseIterator));
+        cityStats.getCrimeStat(CityStats.ROBBERY_INDEX).setPerHundredThousand(this.numPerYearPer100k(parseIterator));
 
         // Get and set assault stats
-        crimeStats.setNumAssaults(this.numPerYear("Assaults", parseIterator));
-        crimeStats.setAssaultStats(this.numPerYearPer100k(parseIterator));
+        cityStats.getCrimeStat(CityStats.ASSAULT_INDEX).setTotalCrimes(this.numPerYear("Assaults", parseIterator));
+        cityStats.getCrimeStat(CityStats.ASSAULT_INDEX).setPerHundredThousand(this.numPerYearPer100k(parseIterator));
 
         // Get and set burglary stats
-        crimeStats.setNumBurglaries(this.numPerYear("Burglaries", parseIterator));
-        crimeStats.setBurglaryStats(this.numPerYearPer100k(parseIterator));
+        cityStats.getCrimeStat(CityStats.BURGLARY_INDEX).setTotalCrimes(this.numPerYear("Burglaries", parseIterator));
+        cityStats.getCrimeStat(CityStats.BURGLARY_INDEX).setPerHundredThousand(this.numPerYearPer100k(parseIterator));
 
         // Get and set theft stats
-        crimeStats.setNumThefts(this.numPerYear("Thefts", parseIterator));
-        crimeStats.setTheftStats(this.numPerYearPer100k(parseIterator));
+        cityStats.getCrimeStat(CityStats.THEFT_INDEX).setTotalCrimes(this.numPerYear("Thefts", parseIterator));
+        cityStats.getCrimeStat(CityStats.THEFT_INDEX).setPerHundredThousand(this.numPerYearPer100k(parseIterator));
 
         // Get and set auto theft stats
-        crimeStats.setNumAutoThefts(this.numPerYear("Auto", parseIterator));
-        crimeStats.setAutoTheftStats(this.numPerYearPer100k(parseIterator));
+        cityStats.getCrimeStat(CityStats.AUTO_THEFT_INDEX).setTotalCrimes(this.numPerYear("Auto", parseIterator));
+        cityStats.getCrimeStat(CityStats.AUTO_THEFT_INDEX).setPerHundredThousand(this.numPerYearPer100k(parseIterator));
 
         // Get and set arson stats
-        crimeStats.setNumArsons(this.numPerYear("Arson", parseIterator));
-        crimeStats.setArsonStats(this.numPerYearPer100k(parseIterator));
+        cityStats.getCrimeStat(CityStats.ARSON_INDEX).setTotalCrimes(this.numPerYear("Arson", parseIterator));
+        cityStats.getCrimeStat(CityStats.ARSON_INDEX).setPerHundredThousand(this.numPerYearPer100k(parseIterator));
 
         // set crimeDataIndex, which will internally set amISafeIndex to values 1, 2, 3 or 4.
-        crimeStats.setCrimeDataIndex();
+        cityStats.setCrimeDataIndex();
     }
 
     /**
@@ -109,9 +109,9 @@ public class CreateCrimeStats implements ICreateCrimeStats {
         try {
             Document doc = Jsoup.connect("http://www.city-data.com/city/" + city + "-" + state + ".html").get();
             html = doc.toString().replaceAll("N/A", "-0"); // handles cases where there is no data availale
-            crimeStats.setResult(true);
+            cityStats.setSuccess(true);
         } catch (IOException e) {
-            crimeStats.setResult(false);
+            cityStats.setSuccess(false);
         }
 
     }
@@ -120,13 +120,13 @@ public class CreateCrimeStats implements ICreateCrimeStats {
 
     /**
      * initialize the html scrape by evaluating how many years of data are available
-     * set the available years to our crimeStats object
+     * set the available years to our cityStats object
      *
      * @return an int representing the position in which we left off
      */
     private int initScrape() {
         // parse the years of crime data that are available
-        int crimeData = html.indexOf("Crime rates in " + crimeStats.getCity() + " by Year") - 10;
+        int crimeData = html.indexOf("Crime rates in " + cityStats.getCity() + " by Year") - 10;
         int crimeDataYearsBegin = html.indexOf("\"", crimeData) + 1;
         int crimeDataYearsEnd = html.indexOf("\"", crimeDataYearsBegin);
         this.numYears = Integer.parseInt(html.substring(crimeDataYearsBegin, crimeDataYearsEnd)) - 1;
@@ -141,7 +141,7 @@ public class CreateCrimeStats implements ICreateCrimeStats {
             parseYearStart = parseYearEnd + 5;
         }
         // set the crime years that are available
-        crimeStats.setCrimeDataYears(crimeDataYears);
+        cityStats.setCrimeDataYears(crimeDataYears);
         return parseYearEnd;
     }
 
@@ -204,11 +204,11 @@ public class CreateCrimeStats implements ICreateCrimeStats {
      * Getters
      */
 
-    public CrimeStats getCrimeStats() {
-        return crimeStats;
+    public CityStats getCityStats() {
+        return cityStats;
     }
 
-    public int[] getCrimeDataYears() {
+    public int[] getCityDataYears() {
         return crimeDataYears;
     }
 }
