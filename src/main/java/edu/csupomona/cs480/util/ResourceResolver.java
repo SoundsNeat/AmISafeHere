@@ -13,7 +13,6 @@ public class ResourceResolver {
 	/**
 	 * Get the file used to store the user object JSON
 	 *
-	 * @param userId
 	 * @return
 	 */
 	public static File getUserFile() {

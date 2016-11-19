@@ -127,19 +127,19 @@ public class CityStats {
         int index = 0;
         for (int i = 0; i < crimeDataYears.length; i++) {
             crimeIndex = 0;
-            crimeIndex += MURDER_WEIGHT * getCrimeStat(MURDER_INDEX).getPerHundredThousand(crimeDataYears[i]);
-            crimeIndex += RAPE_WEIGHT * getCrimeStat(RAPE_INDEX).getPerHundredThousand(crimeDataYears[i]);
-            crimeIndex += ROBBERY_WEIGHT * getCrimeStat(ROBBERY_INDEX).getPerHundredThousand(crimeDataYears[i]);
-            crimeIndex += ASSAULT_WEIGHT * getCrimeStat(ASSAULT_INDEX).getPerHundredThousand(crimeDataYears[i]);
-            crimeIndex += BURGLARY_WEIGHT * getCrimeStat(BURGLARY_INDEX).getPerHundredThousand(crimeDataYears[i]);
-            crimeIndex += THEFT_WEIGHT * getCrimeStat(THEFT_INDEX).getPerHundredThousand(crimeDataYears[i]);
-            crimeIndex += AUTO_THEFT_WEIGHT * getCrimeStat(AUTO_THEFT_INDEX).getPerHundredThousand(crimeDataYears[i]);
-            crimeIndex += ARSON_WEIGHT * getCrimeStat(ARSON_INDEX).getPerHundredThousand(crimeDataYears[i]);
+            crimeIndex += MURDER_WEIGHT * getCrimeStat(MURDER_INDEX).getPerHundredThousand(i);
+            crimeIndex += RAPE_WEIGHT * getCrimeStat(RAPE_INDEX).getPerHundredThousand(i);
+            crimeIndex += ROBBERY_WEIGHT * getCrimeStat(ROBBERY_INDEX).getPerHundredThousand(i);
+            crimeIndex += ASSAULT_WEIGHT * getCrimeStat(ASSAULT_INDEX).getPerHundredThousand(i);
+            crimeIndex += BURGLARY_WEIGHT * getCrimeStat(BURGLARY_INDEX).getPerHundredThousand(i);
+            crimeIndex += THEFT_WEIGHT * getCrimeStat(THEFT_INDEX).getPerHundredThousand(i);
+            crimeIndex += AUTO_THEFT_WEIGHT * getCrimeStat(AUTO_THEFT_INDEX).getPerHundredThousand(i);
+            crimeIndex += ARSON_WEIGHT * getCrimeStat(ARSON_INDEX).getPerHundredThousand(i);
             crimeDataIndex[i] = crimeIndex;
-        } // end for i
+        }
         for (float aCrimeDataIndex : crimeDataIndex) {
             index += aCrimeDataIndex;
-        } // end for i
+        }
         if (index / crimeDataIndex.length >= 700) { // very dangerous
             amISafeIndex = 4;
         } else if (index / crimeDataIndex.length >= 300) { // somewhat dangerous
