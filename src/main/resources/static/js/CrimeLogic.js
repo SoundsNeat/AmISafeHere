@@ -32,8 +32,21 @@ function parseOutput(result) {
     if (result.result) {
         $('#displayResult').show();
         $('#noResultError').hide();
+        constructStars(result.index);
     } else {
         $('#noResultError').show();
         $('#displayResult').hide();
     }
+}
+
+function constructStars(value) {
+    var imgTag = "<img src=\"../img/star-small-$Val.png\" alt=\"\" />";
+
+    var index = 0;
+    var htmlText = "";
+    while (index < 5) {
+        htmlText += imgTag.replace("$Val", index < value ? "1" : "0");
+        index++;
+    }
+    $('#resultStars').html(htmlText);
 }

@@ -320,3 +320,7 @@ body {
     max-width: 80%;
     max-height: auto;
 }
+
+#resultStars {
+    padding-left: 30px;
+}

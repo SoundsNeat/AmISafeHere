@@ -3,10 +3,10 @@ var amISafeHere = angular.module('AmISafeHere', []);
 amISafeHere.controller('CityCtrl', function ($scope, $http) {
     var googleMapsPrefix = "http://maps.googleapis.com/maps/api/geocode/json?latlng=";
     var googleSensorTrue = "&sensor=true";
-    var googleResultIndex = 0;  // detail address format from google
-    var googleArrayCityIndex = 2;
-    var googleArrayStateIndex = 4;
-    var googleArrayCountryIndex = 5;
+    var googleResultIndex = 2;  // detail address format from google
+    var googleArrayCityIndex = 1;
+    var googleArrayStateIndex = 3;
+    var googleArrayCountryIndex = 4;
     $scope.SearchCityWithCoordinates = function () {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
