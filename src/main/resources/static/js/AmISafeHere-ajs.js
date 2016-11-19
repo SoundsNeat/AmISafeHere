@@ -31,17 +31,17 @@ amISafeHere.controller('CityCtrl', function ($scope, $http) {
                         loadModal(parseOutput(result));
                     })
                     .error(function(data){
-                        console.error('fail to connect to backend for auto');
+                        console.error('Failed to connect to backend for auto-detect.');
                         loadModal(parseServerConnectError());
                     });
                 })
                 .error(function(data){
-                    console.error('fail to get coords from google map');
+                    console.error('Failed to get location from Google Maps.');
                     loadModal(parseNoGpsError());
                 });
             });
         } else {
-            console.error("Unable to access your current locaitons.\nPlease use the search box.");
+            console.error("Unable to access your current location.\nPlease use the search box.");
             loadModal(parseNoGpsError());
         }
     }
@@ -56,7 +56,7 @@ amISafeHere.controller('CityCtrl', function ($scope, $http) {
                 loadModal(parseOutput(data));
             })
             .error(function(data){
-                console.error('fail to connect to backend for manual');
+                console.error('Failed to connect to backend for manual input.');
                 loadModal(parseServerConnectError());
             });
     }
