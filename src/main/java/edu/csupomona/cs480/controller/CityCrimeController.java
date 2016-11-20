@@ -1,7 +1,7 @@
 package edu.csupomona.cs480.controller;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import edu.csupomona.cs480.util.CrimeStats.CreateCityStats;
+import edu.csupomona.cs480.util.CrimeStats.CityStatsManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +15,7 @@ import java.io.IOException;
 @RestController
 public class CityCrimeController {
     @Autowired
-    private CreateCityStats createCityStats;
+    private CityStatsManager cityStatsManager;
     /**
      *
      * @param location format: "City-State-Country" NOTE: '_' is replaced with space. Need to replace it back
@@ -49,8 +49,8 @@ public class CityCrimeController {
             throw new RuntimeException("Incorrect format Type");
         }
         System.out.println(address[0] + address[1]);
-        createCityStats.execute(address[0], address[1]);
-        System.out.println(createCityStats.getCityStats().toJson());
+        cityStatsManager.execute(address[0], address[1]);
+        System.out.println(cityStatsManager.getCityStats().toJson());
          //return crimeStatisticsApi(address[0], address[1]);
         String result = "{"
                 + "\"city\":\"" + address[0] + "\","

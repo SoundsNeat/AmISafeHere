@@ -1,8 +1,8 @@
 package edu.csupomona.cs480.util;
 
 import edu.csupomona.cs480.util.CrimeStats.CityStats;
-import edu.csupomona.cs480.util.CrimeStats.CreateCityStats;
-import edu.csupomona.cs480.util.CrimeStats.ICreateCityStats;
+import edu.csupomona.cs480.util.CrimeStats.CityStatsManager;
+import edu.csupomona.cs480.util.CrimeStats.ICityStatsManager;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,10 +16,10 @@ import java.io.IOException;
  */
 
 public class CityStatsTest {
-    ICreateCityStats ccs;
+    ICityStatsManager ccs;
     @Before
     public void init() {
-        ccs = new CreateCityStats();
+        ccs = new CityStatsManager();
     }
 
     @Test

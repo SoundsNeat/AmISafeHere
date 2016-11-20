@@ -9,15 +9,16 @@ import org.jsoup.nodes.Document;
 /**
  * This class scrapes www.city-data.com for crime statistics based on the specified city and state
  * <p>
- * Much of the code written in this class are specific to this website
+ * Much of the code written in this class is specific to this website
  * <p>
  * @author Jonathan T. Fetzer
  * clean-up/documentation: Connor A. Haskins
  * class: CS 480, Cal Poly Pomona
  * group: Sounds Neat
  */
-public class CreateCityStats implements ICreateCityStats {
-    // the CityStats object to hold the crime statistics
+
+public class CityStatsManager implements ICityStatsManager {
+    // the CityStats object to hold the crime statistics for a single city
     private CityStats cityStats;
     // the available years or information offered by the www.city-data.com
     private int[] crimeDataYears;
@@ -27,15 +28,13 @@ public class CreateCityStats implements ICreateCityStats {
     private String html;
 
     /**
-     * A execute method taking the city and state name and acquiring the crime
-     * statistics for that city
+     * Takes the city and state name and acquires the crime
+     * statistics for that city.
      * <p>
      * NOTE:
      * <p>
-     * iterator we will use to parse through the html
-     * we are using an AtomicInteger, so we can essentially pass an int by reference and remember
-     * it's value as we scrape through the html
-     * We want to start the parsing iterator at the end of  initial scrape
+     * An AtomicInteger, simulating pass by reference, is used as an iterator to parse the html,
+     * allowing this method to retain its place. After parsing, the fields of the CityStats object are initialized.
      * <p>
      * @param city  city name
      * @param state state name
@@ -48,7 +47,6 @@ public class CreateCityStats implements ICreateCityStats {
         }
         // create a CityStats object for the chosen city
         cityStats = new CityStats(city, state);
-
         // ensure a multiple word city is url friendly
         city = city.replaceAll(" ", "-");
         // ensure a multiple word state is url friendly
@@ -119,7 +117,7 @@ public class CreateCityStats implements ICreateCityStats {
     // !!IMPORTANT!! : The following two functions are very specific to the html page we are scraping
 
     /**
-     * initialize the html scrape by evaluating how many years of data are available
+     * Initializes the html scrape by evaluating how many years of data are available
      * set the available years to our cityStats object
      *
      * @return an int representing the position in which we left off
