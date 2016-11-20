@@ -29,8 +29,8 @@ function parseOutput(result) {
     $('#cityStateTitle').show();
     $('#noGpsError').hide();
     $('#serverError').hide();
-    if (result.result) {
-        constructStars(result.index);
+    if (result.success) {
+        constructStars(result.amISafeIndex);
         googleMapAddress(result.city + ", " + result.state + ", United States");
         $('#displayResult').show();
         $('#noResultError').hide();

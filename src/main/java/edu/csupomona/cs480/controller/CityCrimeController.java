@@ -48,31 +48,8 @@ public class CityCrimeController {
         if (address.length != 3) {
             throw new RuntimeException("Incorrect format Type");
         }
-        System.out.println(address[0] + address[1]);
         cityStatsManager.execute(address[0], address[1]);
         System.out.println(cityStatsManager.getCityStats().toJson());
-         //return crimeStatisticsApi(address[0], address[1]);
-        String result = "{"
-                + "\"city\":\"" + address[0] + "\","
-                + "\"state\":\"" + address[1] + "\","
-                + "\"result\":true,"
-                + "\"index\":3,"
-                + "\"average\":2015.75,"
-                + "\"years\":[2014,2013,2012]"
-                + "}";
-        return result;
-        /*
-        return "{\"city\":\"Pomona\",\"state\":\"California\",\"result\":true,\"index\":3,\"average\":2015.75,"
-                + "\"years\":[2014,2013,2012],"
-                + "\"category\":["
-                + "{\"numMurders\":[17,29,18]}"
-                + "{\"numRapes\":[17,29,18]}"
-                + "{\"numRobberies\":[17,29,18]}"
-                + "{\"numAssaults\":[17,29,18]}"
-                + "{\"numAutoThefts\":[17,29,18]}"
-                + "{\"numArsons\":[17,29,18]}"
-                + "{\"murderStats\":[17,29,18]}"
-                + "]}";
-                */
+         return cityStatsManager.getCityStats().toJson();
     }
 }
