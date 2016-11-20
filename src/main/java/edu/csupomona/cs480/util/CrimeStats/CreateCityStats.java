@@ -3,6 +3,7 @@ package edu.csupomona.cs480.util.CrimeStats;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -17,6 +18,7 @@ import org.jsoup.nodes.Document;
  * group: Sounds Neat
  */
 public class CreateCityStats implements ICreateCityStats {
+    private static final Logger LOGGER = Logger.getLogger(CreateCityStats.class);
     // the CityStats object to hold the crime statistics
     private CityStats cityStats;
     // the available years or information offered by the www.city-data.com
@@ -107,7 +109,10 @@ public class CreateCityStats implements ICreateCityStats {
      */
     private void getHtmlData(String city, String state) {
         try {
-            Document doc = Jsoup.connect("http://www.city-data.com/city/" + city + "-" + state + ".html").get();
+            String url = "http://www.city-data.com/city/" + city + "-" + state + ".html";
+            LOGGER.fatal(url);
+            System.out.println(url);
+            Document doc = Jsoup.connect(url).get();
             html = doc.toString().replaceAll("N/A", "-0"); // handles cases where there is no data availale
             cityStats.setSuccess(true);
         } catch (IOException e) {

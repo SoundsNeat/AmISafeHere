@@ -48,11 +48,11 @@ public class CityCrimeController {
         if (address.length != 3) {
             throw new RuntimeException("Incorrect format Type");
         }
-        System.out.println(address[0] + address[1]);
+        //System.out.println(address[0] + address[1]);
         createCityStats.execute(address[0], address[1]);
         System.out.println(createCityStats.getCityStats().toJson());
-         //return crimeStatisticsApi(address[0], address[1]);
-        String result = "{"
+         return createCityStats.getCityStats().toJson();
+        /*String result = "{"
                 + "\"city\":\"" + address[0] + "\","
                 + "\"state\":\"" + address[1] + "\","
                 + "\"result\":true,"
@@ -61,6 +61,7 @@ public class CityCrimeController {
                 + "\"years\":[2014,2013,2012]"
                 + "}";
         return result;
+        */
         /*
         return "{\"city\":\"Pomona\",\"state\":\"California\",\"result\":true,\"index\":3,\"average\":2015.75,"
                 + "\"years\":[2014,2013,2012],"
