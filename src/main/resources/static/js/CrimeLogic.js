@@ -30,9 +30,11 @@ function parseOutput(result) {
     $('#noGpsError').hide();
     $('#serverError').hide();
     if (result.result) {
+        constructStars(result.index);
+        googleMapAddress(result.city + ", " + result.state + ", United States");
         $('#displayResult').show();
         $('#noResultError').hide();
-        constructStars(result.index);
+
     } else {
         $('#noResultError').show();
         $('#displayResult').hide();
@@ -49,4 +51,24 @@ function constructStars(value) {
         index++;
     }
     $('#resultStars').html(htmlText);
+}
+
+function googleMapAddress(address) {
+    var geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(-34.397, 150.644);
+    var myOptions = {
+            zoom: 12,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+    var map = new google.maps.Map(document.getElementById("googleMapMedium"), myOptions);
+    geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            map.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
+        }
+    });
 }

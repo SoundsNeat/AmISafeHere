@@ -324,3 +324,8 @@ body {
 #resultStars {
     padding-left: 30px;
 }
+
+#googleMapMedium {
+    height: 400px;
+    width: 400px;
+}
