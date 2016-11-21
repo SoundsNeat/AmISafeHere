@@ -82,6 +82,12 @@ function googleMapAddress(address) {
 function fillGraph(result) {
     var layout = {
         title: 'Crime Statistics',
+        xaxis: {
+            title: 'Types of Crimes'
+        },
+        yaxis: {
+            title: 'Total Incidents'
+        }, 
         barmode: 'group'
     };
 
