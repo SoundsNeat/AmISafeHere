@@ -217,8 +217,9 @@ a:focus {
     transform: scale(1);
   }
 }
-.content-section {.content-se
-  padding-top: 100px;
+.content-section {
+  padding-top: 150px;
+  min-height: 1200px;
 }
 .download-section {
   width: 100%;
