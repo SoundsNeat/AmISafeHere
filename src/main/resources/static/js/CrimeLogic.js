@@ -32,6 +32,7 @@ function parseOutput(result) {
     if (result.success) {
         constructStars(result.amISafeIndex);
         googleMapAddress(result.city + ", " + result.state + ", United States");
+        fillGraph(result);
         $('#displayResult').show();
         $('#noResultError').hide();
 
@@ -76,4 +77,42 @@ function googleMapAddress(address) {
             console.error("geocoder failed");
         }
     });
+}
+
+function fillGraph(result) {
+    var layout = {
+        title: 'Crime Statistics',
+        barmode: 'group'
+    };
+
+    var crimeTypes = [];
+    for (var i = 0; i < result.crimeStats.length; i++) {
+        crimeTypes.push(result.crimeStats[i].type);
+    }
+
+    var crimeYearsArr = [];
+    var allCrimesPerYear = [];
+    for (var i = result.crimeDataYears.length -1; i >= ((result.crimeDataYears.length < 3) ? 0 : result.crimeDataYears.length - 3); i--) {
+        crimeYearsArr.push(result.crimeDataYears[i]);
+        allCrimesPerYear.push([]);
+    }
+
+    for (var i = 0; i < crimeYearsArr.length; i++) {
+        for (var j = 0; j < result.crimeStats.length; j++) {
+            var cellLocation = result.crimeStats[j].totalCrimes.length - 1 - i;
+            allCrimesPerYear[i].push(result.crimeStats[j].totalCrimes[cellLocation]);
+        }
+    }
+
+    var traces = [];
+    for (var i = 0; i < crimeYearsArr.length; i++) {
+        var temp = {
+            x: crimeTypes,
+            y: allCrimesPerYear[i],
+            name: crimeYearsArr[i],
+            type: 'bar'
+        };
+        traces.push(temp);
+    }
+    Plotly.newPlot('detailGraph', traces, layout);
 }

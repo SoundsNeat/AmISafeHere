@@ -172,38 +172,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col">
-                                            <dl class="dl-horizotal">
-                                                <dt>
-                                                    <span>
-                                                        Years:
-                                                    </span>
-                                                </dt>
-                                                <dd>
-                                                    <span>
-                                                        {{result.crimeDataYears}}
-                                                    </span>
-                                                </dd>
-                                                <dt>
-                                                    <span>
-                                                        Murders:
-                                                    </span>
-                                                </dt>
-                                                <dd>
-                                                    <span>
-                                                        {{result.crimeDataYears}}
-                                                    </span>
-                                                </dd>
-                                                <dt>
-                                                    <span>
-                                                        Assaults:
-                                                    </span>
-                                                </dt>
-                                                <dd>
-                                                    <span>
-                                                        {{result.crimeDataYears}}
-                                                    </span>
-                                                </dd>
-                                            </dl>
+                                            <div id="detailGraph"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -365,6 +334,9 @@
 
     <!-- City Autocomplete JavaScript -->
     <script type="text/javascript"  src="./js/teleport-autocomplete.js"></script>
+
+    <!-- Plotly.js -->
+    <script type="text/javascript" src="./js/plotly-latest.min.js"></script>
 
     <!-- Crime Logic JavaScript -->
     <script type="text/javascript"  src="./js/CrimeLogic.js"></script>
