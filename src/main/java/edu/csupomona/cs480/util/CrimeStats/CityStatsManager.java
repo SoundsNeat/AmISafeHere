@@ -2,6 +2,9 @@ package edu.csupomona.cs480.util.CrimeStats;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import edu.csupomona.cs480.util.data.MismatchedData;
+import edu.csupomona.cs480.util.data.MismatchedDataLoader;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
@@ -45,6 +48,13 @@ public class CityStatsManager implements ICityStatsManager {
     public void execute(String city, String state) throws IOException {
         if (StringUtils.isBlank(city) || StringUtils.isBlank(state)) {
             throw new RuntimeException("City or State must not be blank.");
+        }
+        for (MismatchedData each : MismatchedDataLoader.getInstance().getMismatchedDataList()) {
+            if (each.getTeleportCity().equals(city) || each.getTeleportState().equals(state)) {
+                state = each.getDataState();
+                city = each.getDataCity();
+                break;
+            }
         }
         // create a CityStats object for the chosen city
         cityStats = new CityStats(city, state);

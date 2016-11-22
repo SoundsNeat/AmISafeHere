@@ -45,8 +45,8 @@ public class CityCrimeController {
     @RequestMapping(value = "/getCityStatistics", method = RequestMethod.POST)
     String getCityStatistics(@RequestParam("location") String location) throws JsonParseException, IOException {
         String[] address = location.replaceAll("_", " ").split("-");
-        if (address.length != 3) {
-            throw new RuntimeException("Incorrect format Type");
+        if (address.length != 3 && !location.contains("Washington")) {
+            throw new RuntimeException("Incorrect address format");
         }
         cityStatsManager.execute(address[0], address[1]);
         System.out.println(cityStatsManager.getCityStats().toJson());
