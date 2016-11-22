@@ -93,20 +93,24 @@ function fillGraph(result) {
 
     var crimeTypes = [];
     for (var i = 0; i < result.crimeStats.length; i++) {
-        crimeTypes.push(result.crimeStats[i].type);
+        if (result.crimeStats[i].totalCrimes != null) {
+            crimeTypes.push(result.crimeStats[i].type);
+        }
     }
 
     var crimeYearsArr = [];
     var allCrimesPerYear = [];
-    for (var i = result.crimeDataYears.length -1; i >= ((result.crimeDataYears.length < 3) ? 0 : result.crimeDataYears.length - 3); i--) {
+    for (var i = result.crimeDataYears.length - 1; i >= ((result.crimeDataYears.length < 3) ? 0 : result.crimeDataYears.length - 3); i--) {
         crimeYearsArr.push(result.crimeDataYears[i]);
         allCrimesPerYear.push([]);
     }
 
     for (var i = 0; i < crimeYearsArr.length; i++) {
         for (var j = 0; j < result.crimeStats.length; j++) {
-            var cellLocation = result.crimeStats[j].totalCrimes.length - 1 - i;
-            allCrimesPerYear[i].push(result.crimeStats[j].totalCrimes[cellLocation]);
+            if (result.crimeStats[j].totalCrimes != null) {
+                var cellLocation = result.crimeStats[j].totalCrimes.length - 1 - i;
+                allCrimesPerYear[i].push(result.crimeStats[j].totalCrimes[cellLocation]);
+            }
         }
     }
 
