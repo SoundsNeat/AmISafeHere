@@ -352,3 +352,11 @@ body {
     font: 20px;
     margin-bottom: 20px;
 }
+
+.citySearchText {
+    padding-right: 0px !important;
+}
+
+#separatorAutoManual {
+    min-height: 10px;
+}
