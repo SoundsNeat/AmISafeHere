@@ -141,15 +141,15 @@ public class CityStats {
         // average out the index
         index /= crimeDataIndex.length;
         if (index > 50000) { // very dangerous
-            amISafeIndex = 5;
+            amISafeIndex = 1;
         } else if (index > 36000) { // dangerous
-            amISafeIndex = 4;
+            amISafeIndex = 2;
         } else if (index > 25000) { // average
             amISafeIndex = 3;
         } else if (index > 18000) { // safe
-            amISafeIndex = 2;
+            amISafeIndex = 4;
         } else { // very safe
-            amISafeIndex = 1;
+            amISafeIndex = 5;
         }
     }
 
