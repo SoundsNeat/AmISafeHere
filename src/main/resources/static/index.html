@@ -88,8 +88,8 @@
                 <div class="row">
                     <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-2">
                         <h4 class="brand-heading">Let's find out! </h4>
-                        <button class="btn-success btn-lg btn-block"
-
+                        <button type="submit" class="btn-success btn-lg btn-block"
+                                data-toggle="modal" data-target="#resultModal"
                                 ng-click="SearchCityWithCoordinates()">
                             <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
                             Get My Location
@@ -109,7 +109,7 @@
                                 <button type="submit" class="btn btn-default"
                                         data-toggle="modal" data-target="#resultModal" ng-click="SearchCityWithAddress()">
                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                    Find
+                                    Safe ?
                                 </button>
                             </div>
                         </div>
@@ -142,36 +142,27 @@
                                 <!-- Success -->
                                 <div class="" id="displayResult">
                                     <div class="row">
-                                        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12 col-centered">
                                             <div id="googleMapMedium"></div>
                                         </div>
-                                        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                            <dl class="dl-horizontal">
-                                                <dt>
-                                            <span>
-                                                Safety Index:
-                                            </span>
-                                                </dt>
-                                                <dd>
-                                            <span id="ResultRating">
+                                        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12 col-centered">
+                                            <div class="safetyRating text-center">
+                                                <strong>
+                                                    Danger Index
+                                                </strong>
+                                                <br />
+                                                <br />
+                                                <span id="ResultRating">
                                                 <div>
                                                     <span id="resultStars">
-
                                                     </span>
                                                 </div>
-                                                <div>
-                                                    <span>WORST</span>
-                                                    <span>...........</span>
-                                                    <span>BEST</span>
-                                                </div>
-
                                             </span>
-                                                </dd>
-                                            </dl>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col col-centered">
                                             <div id="detailGraph"></div>
                                         </div>
                                     </div>
