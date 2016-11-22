@@ -50,7 +50,7 @@ public class CityStatsManager implements ICityStatsManager {
             throw new RuntimeException("City or State must not be blank.");
         }
         for (MismatchedData each : MismatchedDataLoader.getInstance().getMismatchedDataList()) {
-            if (each.getTeleportCity().equals(city) || each.getTeleportState().equals(state)) {
+            if (each.getTeleportCity().equals(city) && each.getTeleportState().equals(state)) {
                 state = each.getDataState();
                 city = each.getDataCity();
                 break;
