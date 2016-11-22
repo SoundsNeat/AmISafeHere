@@ -13,7 +13,9 @@ public class MismatchedDataLoader {
 
     private MismatchedDataLoader() {
         mismatchedDataList.add(new MismatchedData("New York City", "New York", "New York", "New York"));
-        mismatchedDataList.add(new MismatchedData("Washington", "D.C.", "Washington", "District-of-Columbia"));
+        mismatchedDataList.add(new MismatchedData("Washington", "D.C.", "Washington", "District of Columbia"));
+        mismatchedDataList.add(new MismatchedData("La Cañada Flintridge", "California", "La Canada Flintridge", "California"));
+        //mismatchedDataList.add(new MismatchedData("", "", "", ""));
     }
 
 
