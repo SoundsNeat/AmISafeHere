@@ -91,6 +91,8 @@ function fillGraph(result) {
         barmode: 'group'
     };
 
+    Plotly.BUILD; // This constructor must be called for the graph to be created.
+    
     var crimeTypes = [];
     for (var i = 0; i < result.crimeStats.length; i++) {
         if (result.crimeStats[i].totalCrimes != null) {
@@ -113,7 +115,20 @@ function fillGraph(result) {
             }
         }
     }
+// This function should work, I have a class that creates these types of Json strings in the Graph folder, if working will finish it.
+   /*var traces = JSON.parse('[{"x":["Murders","Rapes","Roberies","Assaults","Thefts","Auto Thefts","Arsons"],"y":[2, 14, 35, 85, 305, 149, 7],"name":"Adelanto","type":"bar"}]');
+   var layout = {
+			  title: 'Most Recent Year Crime Data',
+			  xaxis: {
+				title: 'Crimes'
+			  },
+			  yaxis: {
+				title: 'Incidents'
+			  }
+			};
 
+			Plotly.newPlot('myDiv', graphData, layout);
+    */
     var traces = [];
     for (var i = 0; i < crimeYearsArr.length; i++) {
         var temp = {
