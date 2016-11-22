@@ -43,7 +43,7 @@ function parseOutput(result) {
 }
 
 function constructStars(value) {
-    var imgTag = "<img src=\"../img/star-small-$Val.png\" alt=\"\" />";
+    var imgTag = "<img src=\"../img/knife-small-$Val.png\" class=\"danger-image\" alt=\"\" />&nbsp;";
 
     var index = 0;
     var htmlText = "";
