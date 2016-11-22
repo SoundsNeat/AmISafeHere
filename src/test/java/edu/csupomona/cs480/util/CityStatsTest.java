@@ -59,28 +59,28 @@ public class CityStatsTest {
     public void SafeIndex1LowerBound() throws IOException {
         ccs.execute("Virginia Beach", "Virginia");
         CityStats city = ccs.getCityStats();
-        Assert.assertEquals(5, city.getAmISafeIndex(), 0);
+        Assert.assertEquals(1, city.getAmISafeIndex(), 0);
     }
 
     @Test
     public void SafeIndex1UpperBound() throws IOException {
         ccs.execute("Austin", "Texas");
         CityStats city = ccs.getCityStats();
-        Assert.assertEquals(5, city.getAmISafeIndex(), 0);
+        Assert.assertEquals(1, city.getAmISafeIndex(), 0);
     }
 
     @Test
     public void SafeIndex2LowerBound() throws IOException {
         ccs.execute("Aurora", "Colorado");
         CityStats city = ccs.getCityStats();
-        Assert.assertEquals(4, city.getAmISafeIndex(), 0);
+        Assert.assertEquals(2, city.getAmISafeIndex(), 0);
     }
 
     @Test
     public void SafeIndex2UpperBound() throws IOException {
         ccs.execute("Pittsburgh", "Pennsylvania");
         CityStats city = ccs.getCityStats();
-        Assert.assertEquals(4, city.getAmISafeIndex(), 0);
+        Assert.assertEquals(2, city.getAmISafeIndex(), 0);
     }
 
     @Test
@@ -101,28 +101,28 @@ public class CityStatsTest {
     public void SafeIndex4LowerBound() throws IOException {
         ccs.execute("Atlanta", "Georgia");
         CityStats city = ccs.getCityStats();
-        Assert.assertEquals(2, city.getAmISafeIndex(), 0);
+        Assert.assertEquals(4, city.getAmISafeIndex(), 0);
     }
 
     @Test
     public void SafeIndex4UpperBound() throws IOException {
         ccs.execute("Memphis", "Tennessee");
         CityStats city = ccs.getCityStats();
-        Assert.assertEquals(2, city.getAmISafeIndex(), 0);
+        Assert.assertEquals(4, city.getAmISafeIndex(), 0);
     }
 
     @Test
     public void SafeIndex5LowerBound() throws IOException {
         ccs.execute("Detroit", "Michigan");
         CityStats city = ccs.getCityStats();
-        Assert.assertEquals(1, city.getAmISafeIndex(), 0);
+        Assert.assertEquals(5, city.getAmISafeIndex(), 0);
     }
 
     @Test
     public void SafeIndex5UpperBound() throws IOException {
         ccs.execute("St. Louis", "Missouri");
         CityStats city = ccs.getCityStats();
-        Assert.assertEquals(1, city.getAmISafeIndex(), 0);
+        Assert.assertEquals(5, city.getAmISafeIndex(), 0);
     }
 
     @Test
