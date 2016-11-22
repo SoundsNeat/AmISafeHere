@@ -34,7 +34,7 @@ public class CityStats {
     private String city;
     private String state;
     private boolean success;
-    private int amISafeIndex; // takes on values 1 (very safe), 2 (mostly safe), 3 (somewhat dangerous), and 4 (very dangerous).
+    private int amISafeIndex; // takes on values 1 (very dangerous), through 5 (very safe).
 
     private CrimeStat [] crimeStats;
 
