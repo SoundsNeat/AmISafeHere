@@ -12,13 +12,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class CityStats {
 
-    private static final int MURDER_WEIGHT = 10;
-    private static final int RAPE_WEIGHT = 8;
-    private static final int ROBBERY_WEIGHT = 2;
-    private static final int ASSAULT_WEIGHT = 5;
-    private static final int BURGLARY_WEIGHT = 3;
+    private static final int MURDER_WEIGHT = 100;
+    private static final int RAPE_WEIGHT = 80;
+    private static final int ROBBERY_WEIGHT = 3;
+    private static final int ASSAULT_WEIGHT = 25;
+    private static final int BURGLARY_WEIGHT = 2;
     private static final int THEFT_WEIGHT = 1;
-    private static final int AUTO_THEFT_WEIGHT = 1;
+    private static final int AUTO_THEFT_WEIGHT = 3;
     private static final int ARSON_WEIGHT = 5;
 
     public static final int MURDER_INDEX = 0;
@@ -58,9 +58,8 @@ public class CityStats {
 
     /**
      * Create an instance of CityStats using city and state name strings
-     *
-     * @param city
-     * @param state
+     * @param city name of city
+     * @param state name of state
      */
     protected CityStats(String city, String state) {
         this.city = city;
@@ -134,22 +133,27 @@ public class CityStats {
             crimeIndex += BURGLARY_WEIGHT * getCrimeStat(BURGLARY_INDEX).getPerHundredThousand(i);
             crimeIndex += THEFT_WEIGHT * getCrimeStat(THEFT_INDEX).getPerHundredThousand(i);
             crimeIndex += AUTO_THEFT_WEIGHT * getCrimeStat(AUTO_THEFT_INDEX).getPerHundredThousand(i);
-            crimeIndex += ARSON_WEIGHT * getCrimeStat(ARSON_INDEX).getPerHundredThousand(i);
             crimeDataIndex[i] = crimeIndex;
         }
         for (float aCrimeDataIndex : crimeDataIndex) {
             index += aCrimeDataIndex;
         }
-        if (index / crimeDataIndex.length >= 700) { // very dangerous
+        // average out the index
+        index /= crimeDataIndex.length;
+        if (index > 50000) { // very dangerous
+            amISafeIndex = 5;
+        } else if (index > 36000) { // dangerous
             amISafeIndex = 4;
-        } else if (index / crimeDataIndex.length >= 300) { // somewhat dangerous
+        } else if (index > 25000) { // average
             amISafeIndex = 3;
-        } else if (index / crimeDataIndex.length > 200) { // mostly safe
+        } else if (index > 18000) { // safe
             amISafeIndex = 2;
         } else { // very safe
             amISafeIndex = 1;
         }
     }
+
+
 
     public void setCity(String city) {
         this.city = city;
@@ -184,8 +188,7 @@ public class CityStats {
 
     /**
      * Super cool function that turns the CityStats object into JSON format
-     *
-     * @return
+     * @return object as JSON string
      */
     public String toJson() {
         ObjectMapper mapper = new ObjectMapper();
