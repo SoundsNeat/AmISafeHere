@@ -81,7 +81,7 @@ function googleMapAddress(address) {
 
 function fillGraph(result) {
     var layout = {
-        title: 'Crime Statistics',
+        title: result.city.concat(' Crime Statistics'),
         xaxis: {
             title: 'Types of Crimes'
         },
