@@ -57,14 +57,14 @@ public class CityStatsTest {
 
     @Test
     public void SafeIndex1LowerBound() throws IOException {
-        ccs.execute("Virginia Beach", "Virginia");
+        ccs.execute("Chandler", "Arizona");
         CityStats city = ccs.getCityStats();
         Assert.assertEquals(1, city.getAmISafeIndex(), 0);
     }
 
     @Test
     public void SafeIndex1UpperBound() throws IOException {
-        ccs.execute("Austin", "Texas");
+        ccs.execute("San Diego", "California");
         CityStats city = ccs.getCityStats();
         Assert.assertEquals(1, city.getAmISafeIndex(), 0);
     }
@@ -92,14 +92,14 @@ public class CityStatsTest {
 
     @Test
     public void SafeIndex3UpperBound() throws IOException {
-        ccs.execute("Washington", "District of Columbia");
+        ccs.execute("Atlanta", "Georgia");
         CityStats city = ccs.getCityStats();
         Assert.assertEquals(3, city.getAmISafeIndex(), 0);
     }
 
     @Test
     public void SafeIndex4LowerBound() throws IOException {
-        ccs.execute("Atlanta", "Georgia");
+        ccs.execute("Kansas City", "Missouri");
         CityStats city = ccs.getCityStats();
         Assert.assertEquals(4, city.getAmISafeIndex(), 0);
     }

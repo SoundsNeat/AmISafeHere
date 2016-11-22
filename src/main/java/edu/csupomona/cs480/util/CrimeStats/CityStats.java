@@ -12,14 +12,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class CityStats {
 
-    private static final int MURDER_WEIGHT = 100;
-    private static final int RAPE_WEIGHT = 80;
-    private static final int ROBBERY_WEIGHT = 3;
-    private static final int ASSAULT_WEIGHT = 25;
-    private static final int BURGLARY_WEIGHT = 2;
-    private static final int THEFT_WEIGHT = 1;
-    private static final int AUTO_THEFT_WEIGHT = 3;
-    private static final int ARSON_WEIGHT = 5;
+    private static final int MURDER_WEIGHT = 40;
+    private static final int RAPE_WEIGHT = 30;
+    private static final int ASSAULT_WEIGHT = 10;
+    private static final int ROBBERY_WEIGHT = 8;
+    private static final int BURGLARY_WEIGHT = 5;
+    private static final int AUTO_THEFT_WEIGHT = 5;
+    private static final int THEFT_WEIGHT = 2;
+    private static final int TOTAL_WEIGHT = MURDER_WEIGHT + RAPE_WEIGHT
+            + ASSAULT_WEIGHT + ROBBERY_WEIGHT + BURGLARY_WEIGHT + AUTO_THEFT_WEIGHT + THEFT_WEIGHT;
 
     public static final int MURDER_INDEX = 0;
     public static final int RAPE_INDEX = 1;
@@ -122,38 +123,148 @@ public class CityStats {
 
     public void setCrimeDataIndex() {
         this.crimeDataIndex = new float[crimeDataYears.length];
-        long crimeIndex;
-        int index = 0;
+        float murderPerHundredThousand = 0;
+        float rapePerHundredThousand = 0;
+        float robberyPerHundredThousand = 0;
+        float assaultPerHundredThousand = 0;
+        float burglaryPerHundredThousand = 0;
+        float theftPerHundredThousand = 0;
+        float autoTheftPerHundredThousand = 0;
+
         for (int i = 0; i < crimeDataYears.length; i++) {
-            crimeIndex = 0;
-            crimeIndex += MURDER_WEIGHT * getCrimeStat(MURDER_INDEX).getPerHundredThousand(i);
-            crimeIndex += RAPE_WEIGHT * getCrimeStat(RAPE_INDEX).getPerHundredThousand(i);
-            crimeIndex += ROBBERY_WEIGHT * getCrimeStat(ROBBERY_INDEX).getPerHundredThousand(i);
-            crimeIndex += ASSAULT_WEIGHT * getCrimeStat(ASSAULT_INDEX).getPerHundredThousand(i);
-            crimeIndex += BURGLARY_WEIGHT * getCrimeStat(BURGLARY_INDEX).getPerHundredThousand(i);
-            crimeIndex += THEFT_WEIGHT * getCrimeStat(THEFT_INDEX).getPerHundredThousand(i);
-            crimeIndex += AUTO_THEFT_WEIGHT * getCrimeStat(AUTO_THEFT_INDEX).getPerHundredThousand(i);
-            crimeDataIndex[i] = crimeIndex;
+            murderPerHundredThousand += getCrimeStat(MURDER_INDEX).getPerHundredThousand(i);
+            rapePerHundredThousand += getCrimeStat(RAPE_INDEX).getPerHundredThousand(i);
+            robberyPerHundredThousand += getCrimeStat(ROBBERY_INDEX).getPerHundredThousand(i);
+            assaultPerHundredThousand += getCrimeStat(ASSAULT_INDEX).getPerHundredThousand(i);
+            burglaryPerHundredThousand += getCrimeStat(BURGLARY_INDEX).getPerHundredThousand(i);
+            theftPerHundredThousand += getCrimeStat(THEFT_INDEX).getPerHundredThousand(i);
+            autoTheftPerHundredThousand += getCrimeStat(AUTO_THEFT_INDEX).getPerHundredThousand(i);
         }
-        for (float aCrimeDataIndex : crimeDataIndex) {
-            index += aCrimeDataIndex;
-        }
-        // average out the index
-        index /= crimeDataIndex.length;
-        if (index > 50000) { // very dangerous
-            amISafeIndex = 5;
-        } else if (index > 36000) { // dangerous
-            amISafeIndex = 4;
-        } else if (index > 25000) { // average
-            amISafeIndex = 3;
-        } else if (index > 18000) { // safe
-            amISafeIndex = 2;
-        } else { // safe
-            amISafeIndex = 1;
+
+        // average out the indexes
+        murderPerHundredThousand /= crimeDataYears.length;
+        rapePerHundredThousand /= crimeDataYears.length;
+        robberyPerHundredThousand /= crimeDataYears.length;
+        assaultPerHundredThousand /= crimeDataYears.length;
+        burglaryPerHundredThousand /= crimeDataYears.length;
+        theftPerHundredThousand /= crimeDataYears.length;
+        autoTheftPerHundredThousand /= crimeDataYears.length;
+
+        int murderCrimeIndex = calcMurderCrimeIndex(murderPerHundredThousand);
+        int rapeCrimeIndex = calcRapeCrimeIndex(rapePerHundredThousand);
+        int robberyCrimeIndex = calcRobberyCrimeIndex(robberyPerHundredThousand);
+        int assaultCrimeIndex = calcAssaultCrimeIndex(assaultPerHundredThousand);
+        int burglaryCrimeIndex = calcBurglaryCrimeIndex(burglaryPerHundredThousand);
+        int theftCrimeIndex = calcTheftCrimeIndex(theftPerHundredThousand);
+        int autoTheftCrimeIndex = calcAutoTheftCrimeIndex(autoTheftPerHundredThousand);
+
+        int crimeIndex = (murderCrimeIndex * MURDER_WEIGHT) + (rapeCrimeIndex * RAPE_WEIGHT) +
+                (robberyCrimeIndex * ROBBERY_WEIGHT) + (assaultCrimeIndex * ASSAULT_WEIGHT) +
+                (burglaryCrimeIndex * BURGLARY_WEIGHT) + (theftCrimeIndex * THEFT_WEIGHT) +
+                (autoTheftCrimeIndex * AUTO_THEFT_WEIGHT);
+
+        amISafeIndex = Math.round((float) crimeIndex / TOTAL_WEIGHT);
+
+        System.out.println("AmISafeIndex: " + amISafeIndex);
+    }
+
+    int calcMurderCrimeIndex(float murderPerHundredThousand) {
+        if(murderPerHundredThousand > 32) {
+            return 5;
+        } else if (murderPerHundredThousand > 24) {
+            return 4;
+        } else if (murderPerHundredThousand > 16) {
+            return 3;
+        } else if (murderPerHundredThousand > 8) {
+            return 2;
+        } else {
+            return 1;
         }
     }
 
+    int calcRapeCrimeIndex(float rapePerHundredThousand) {
+        if(rapePerHundredThousand > 50) {
+            return 5;
+        } else if (rapePerHundredThousand > 42) {
+            return 4;
+        } else if (rapePerHundredThousand > 36) {
+            return 3;
+        } else if (rapePerHundredThousand > 28) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
 
+    int calcRobberyCrimeIndex(float robberyPerHundredThousand) {
+        if(robberyPerHundredThousand > 580) {
+            return 5;
+        } else if (robberyPerHundredThousand > 460) {
+            return 4;
+        } else if (robberyPerHundredThousand > 340) {
+            return 3;
+        } else if (robberyPerHundredThousand > 220) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
+    int calcAssaultCrimeIndex(float assaultPerHundredThousand) {
+        if(assaultPerHundredThousand > 1060) {
+            return 5;
+        } else if (assaultPerHundredThousand > 815) {
+            return 4;
+        } else if (assaultPerHundredThousand > 570) {
+            return 3;
+        } else if (assaultPerHundredThousand > 325) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
+    int calcBurglaryCrimeIndex(float burglaryPerHundredThousand) {
+        if(burglaryPerHundredThousand > 1810) {
+            return 5;
+        } else if (burglaryPerHundredThousand > 1465) {
+            return 4;
+        } else if (burglaryPerHundredThousand > 1120) {
+            return 3;
+        } else if (burglaryPerHundredThousand > 775) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
+    int calcTheftCrimeIndex(float theftPerHundredThousand) {
+        if(theftPerHundredThousand > 4905) {
+            return 5;
+        } else if (theftPerHundredThousand > 4250) {
+            return 4;
+        } else if (theftPerHundredThousand > 3595) {
+            return 3;
+        } else if (theftPerHundredThousand > 2940) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
+    int calcAutoTheftCrimeIndex(float autoTheftPerHundredThousand) {
+        if(autoTheftPerHundredThousand > 1640) {
+            return 5;
+        } else if (autoTheftPerHundredThousand > 1265) {
+            return 4;
+        } else if (autoTheftPerHundredThousand > 890) {
+            return 3;
+        } else if (autoTheftPerHundredThousand > 515) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
 
     public void setCity(String city) {
         this.city = city;
