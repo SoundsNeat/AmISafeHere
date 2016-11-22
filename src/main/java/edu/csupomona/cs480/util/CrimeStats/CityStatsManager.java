@@ -170,6 +170,13 @@ public class CityStatsManager implements ICityStatsManager {
         int[] numCrimes = new int[this.numYears];
         int data;
 
+//         if(startData - parseIterator > 1000){
+//         	for (int i = 0; i < this.numYears; i++) {
+// 				numCrimes[i] = 0;
+// 			} // end for i
+//          parseIterator.set(parseIterator + 50);
+//         } else {
+            
         try {
             for (int i = 0; i < this.numYears; i++) {
                 startData = html.indexOf("<td>", startData) + 4;
@@ -181,7 +188,7 @@ public class CityStatsManager implements ICityStatsManager {
         } catch (NumberFormatException nfe) {
             numCrimes = null;
         }
-
+//          } // end else
         return numCrimes;
     }
 
@@ -197,6 +204,12 @@ public class CityStatsManager implements ICityStatsManager {
         float[] stats = new float[this.numYears];
         float crimeStat;
 
+//         if(startStats - parseIterator > 1000){
+//         	for (int i = 0; i < this.numYears; i++) {
+// 				stats[i] = 0;
+// 			} // end for i
+//          parseIterator.set(parseIterator + 50);
+//         } else {
         try {
             for (int i = 0; i < this.numYears; i++) {
                 startStats = html.indexOf("<td>", startStats) + 4;
@@ -208,7 +221,7 @@ public class CityStatsManager implements ICityStatsManager {
         } catch (NumberFormatException nfe) {
             stats = null;
         }
-
+//          } // end else
         return stats;
     }
 
