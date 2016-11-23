@@ -4,26 +4,17 @@ amISafeHere.controller('CityCtrl', function ($scope, $http) {
     var googleMapsPrefix = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
     var googleSensorTrue = "&sensor=true";
     var googleKey = "&key=AIzaSyD90S0xFhWOVrI1BsM72yAognJ7tQy-_xM";
-    var resultCityIndex = 2;  // detail address format from google
-    var resultStateCountryIndex = 6;  // detail address format from google
-    var arrayCityIndex = 0;
-    var arrayStateIndex = 0;
-    var arrayCountryIndex = 1;
+
     $scope.SearchCityWithCoordinates = function () {
             showPreLoad();
             if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
-                var location = "";
                 var googleUrl = googleMapsPrefix + position.coords.latitude + "," + position.coords.longitude
                                 + googleSensorTrue + googleKey;
                 console.info(googleUrl);
                 $http.post(googleUrl)
                 .success(function(result){
-                    console.dir(result);
-                    location = result.results[resultCityIndex].formatted_address.split(",")[arrayCityIndex] + "-" +
-                               result.results[resultStateCountryIndex].formatted_address.split(",")[arrayStateIndex]+ "-" +
-                               result.results[resultStateCountryIndex].formatted_address.split(",")[arrayCountryIndex];
-                    $http.post("getCityStatistics" + "?location=" + reformatAddress(location))
+                    $http.post("getCityStatistics" + "?location=" + reformatAddress(extractAddressFromGoogleAPI(result.results)))
                     .success(function(result){
                         console.info("auto");
                         console.info(result.city);
