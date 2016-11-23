@@ -328,7 +328,7 @@ body {
 
 #googleMapMedium {
     height: 400px;
-    width: 400px;
+    width: 100%;
 }
 
 #resultTitle {
@@ -338,7 +338,6 @@ body {
 #detailGraph {
     height: 500px;
     width: 100%;
-    max-width: 800px;
     overflow-y: hidden;
     overflow-x: scroll;
 }
