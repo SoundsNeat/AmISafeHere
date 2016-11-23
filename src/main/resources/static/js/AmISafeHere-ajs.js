@@ -10,7 +10,8 @@ amISafeHere.controller('CityCtrl', function ($scope, $http) {
     var arrayStateIndex = 0;
     var arrayCountryIndex = 1;
     $scope.SearchCityWithCoordinates = function () {
-        if (navigator.geolocation) {
+            showPreLoad();
+            if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var location = "";
                 var googleUrl = googleMapsPrefix + position.coords.latitude + "," + position.coords.longitude
@@ -51,6 +52,7 @@ amISafeHere.controller('CityCtrl', function ($scope, $http) {
     }
 
     $scope.SearchCityWithAddress = function () {
+        showPreLoad();
         $http.post("getCityStatistics" + "?location=" + reformatAddress($('#selectedCity').text()))
             .success(function(data){
                 console.info("manual");

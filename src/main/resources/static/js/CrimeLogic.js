@@ -8,8 +8,17 @@ function reformatAddress(address) {
     return address.replace(/, /g,"-").replace(/ /g,"_");
 }
 
+function showPreLoad() {
+    $('#pre-load').show();
+    $('#cityStateTitle').hide();
+    $('#noGpsError').hide();
+    $('#serverError').hide();
+}
+
 function loadModal() {
+    $('#pre-load').hide();
     $('#resultModal').modal({show:true});
+    $('#resultModal').scrollTop(0);
 }
 
 function parseServerConnectError() {
