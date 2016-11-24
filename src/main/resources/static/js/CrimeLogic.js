@@ -149,7 +149,7 @@ function googleMapAddress(address) {
 }
 
 /*
- * This code will collect the latest 3 years of data for each crime and reconstruct them
+ * This code will collect the latest 3 years of data for each crime per 100,000 and reconstruct them
  * based on Plotly input JSON format.
  */
 function fillGraph(result) {
@@ -159,14 +159,14 @@ function fillGraph(result) {
             title: 'Types of Crimes'
         },
         yaxis: {
-            title: 'Total Incidents'
+            title: 'Total Incidents per 100,000'
         }, 
         barmode: 'group'
     };
 
     var crimeTypes = [];
     for (var i = 0; i < result.crimeStats.length; i++) {
-        if (result.crimeStats[i].totalCrimes != null) {
+        if (result.crimeStats[i].perHundredThousand != null) {
             crimeTypes.push(result.crimeStats[i].type);
         }
     }
@@ -180,9 +180,9 @@ function fillGraph(result) {
 
     for (var i = 0; i < crimeYearsArr.length; i++) {
         for (var j = 0; j < result.crimeStats.length; j++) {
-            if (result.crimeStats[j].totalCrimes != null) {
-                var cellLocation = result.crimeStats[j].totalCrimes.length - 1 - i;
-                allCrimesPerYear[i].push(result.crimeStats[j].totalCrimes[cellLocation]);
+            if (result.crimeStats[j].perHundredThousand != null) {
+                var cellLocation = result.crimeStats[j].perHundredThousand.length - 1 - i;
+                allCrimesPerYear[i].push(result.crimeStats[j].perHundredThousand[cellLocation]);
             }
         }
     }
