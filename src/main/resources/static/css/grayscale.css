@@ -335,7 +335,7 @@ body {
     padding-left: 10px;
 }
 
-#detailGraph {
+.crimeGraph {
     height: 500px;
     width: 100%;
     overflow-y: hidden;
@@ -358,4 +358,10 @@ body {
 
 #separatorAutoManual {
     min-height: 10px;
+}
+
+.btn-tab{
+    padding: 0px;
+    font-size: 18px;
+    line-height: 1.0;
 }
