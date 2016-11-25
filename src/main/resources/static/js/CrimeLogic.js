@@ -4,20 +4,6 @@ TeleportAutocomplete.init('#citySearch').on('change', function(value) {
 appendToResult('<pre id="selectedCity" style="display:none;">' + value.title + '</pre>');
 });
 
-$('#buttonGraphOneHundredThousandView').on('click', function (evt) {
-	$("#detailGraph").hide();
-	$("#oneHundredThousandGraph").show();
-    $('#buttonGraphOneHundredThousandView').css('background-color', '#eee');
-    $('#buttonGraphDetailView').css('background-color', '');
-});
-
-$('#buttonGraphDetailView').on('click', function (evt) {
-	$("#oneHundredThousandGraph").hide();
-	$("#detailGraph").show();
-    $('#buttonGraphDetailView').css('background-color', '#eee');
-    $('#buttonGraphOneHundredThousandView').css('background-color', '');
-});
-
 /*
  * This function tries to find the correct address type from all different types returned by google api.
  * The type of address for this program is "postal_code"
@@ -65,54 +51,6 @@ function reformatAddress(address) {
     return address.replace(/, /g,"-").replace(/ /g,"_");
 }
 
-/*
- * The following functions show and hide respective "divs" based on results.
- */
-function showPreLoad() {
-    $('#pre-load').show();
-    $('#cityStateTitle').hide();
-    $('#noGpsError').hide();
-    $('#serverError').hide();
-}
-
-function loadModal() {
-    $('#pre-load').hide();
-    $('#resultModal').modal({show:true});
-    $('#resultModal').scrollTop(0);
-}
-
-function parseServerConnectError() {
-    $('#serverError').show();
-    $('#noGpsError').hide();
-    $('#cityStateTitle').hide();
-
-}
-
-function parseNoGpsError() {
-    $('#noGpsError').show();
-    $('#cityStateTitle').hide();
-    $('#serverError').hide();
-}
-
-function parseOutput(result) {
-    $('#cityStateTitle').show();
-    $('#noGpsError').hide();
-    $('#serverError').hide();
-    if (result.success) {
-        constructStars(result.amISafeIndex);
-        googleMapAddress(result.city + ", " + result.state + ", United States");
-        fillGraph(result);
-        $('#buttonGraphOneHundredThousandView').css('background-color', '#eee');
-        $('#buttonGraphDetailView').css('background-color', '');
-        $("#detailGraph").hide();
-        $('#displayResult').show();
-        $('#noResultError').hide();
-
-    } else {
-        $('#noResultError').show();
-        $('#displayResult').hide();
-    }
-}
 
 /**
  * This function draw knifes or blank knifes based on how safe the city is.
@@ -165,78 +103,4 @@ function googleMapAddress(address) {
     });
 }
 
-/*
- * This code will collect the latest 3 years of data for each crime per 100,000 and reconstruct them
- * based on Plotly input JSON format.
- */
-function fillGraph(result) {
-    var layoutDetailed = {
-        title: result.city.concat(' Crime Statistics'),
-        xaxis: {
-            title: 'Types of Crimes'
-        },
-        yaxis: {
-            title: 'Total Incidents'
-        },
-        barmode: 'group'
-    };
 
-    var layoutOneHundredThousand = {
-            title: result.city.concat(' Crime Statistics'),
-            xaxis: {
-                title: 'Types of Crimes'
-            },
-            yaxis: {
-                title: 'Incidents per 100,000'
-            },
-            barmode: 'group'
-        };
-
-    var crimeTypes = [];
-    for (var i = 0; i < result.crimeStats.length; i++) {
-        if (result.crimeStats[i].perHundredThousand != null) {
-            crimeTypes.push(result.crimeStats[i].type);
-        }
-    }
-
-    var crimeYearsArr = [];
-    var allCrimesPerYear = [];
-    var allCrimesPerOneHundredThousandPerYear = [];
-    for (var i = result.crimeDataYears.length - 1; i >= ((result.crimeDataYears.length < 3) ? 0 : result.crimeDataYears.length - 3); i--) {
-        crimeYearsArr.push(result.crimeDataYears[i]);
-        allCrimesPerYear.push([]);
-        allCrimesPerOneHundredThousandPerYear.push([]);
-    }
-
-    for (var i = 0; i < crimeYearsArr.length; i++) {
-        for (var j = 0; j < result.crimeStats.length; j++) {
-            if (result.crimeStats[j].perHundredThousand != null) {
-                var cellLocation = result.crimeStats[j].perHundredThousand.length - 1 - i;
-                allCrimesPerYear[i].push(result.crimeStats[j].totalCrimes[cellLocation]);
-                allCrimesPerOneHundredThousandPerYear[i].push(result.crimeStats[j].perHundredThousand[cellLocation]);
-            }
-        }
-    }
-
-    var tracesTotal = [];
-    var tracesPerOneHundredThousand = [];
-    for (var i = 0; i < crimeYearsArr.length; i++) {
-        var temp = {
-            x: crimeTypes,
-            y: allCrimesPerYear[i],
-            name: crimeYearsArr[i],
-            type: 'bar'
-        };
-        tracesTotal.push(temp);
-        temp = {
-            x: crimeTypes,
-            y: allCrimesPerOneHundredThousandPerYear[i],
-            name: crimeYearsArr[i],
-            type: 'bar'
-        };
-        tracesPerOneHundredThousand.push(temp);
-    }
-    Plotly.BUILD; // This constructor must be called for the graph to be created.
-    Plotly.newPlot('oneHundredThousandGraph', tracesPerOneHundredThousand, layoutOneHundredThousand);
-    Plotly.newPlot('detailGraph', tracesTotal, layoutDetailed);
-}
