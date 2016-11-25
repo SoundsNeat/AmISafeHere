@@ -79,7 +79,6 @@ function constructStars(value) {
  * 2nd part is the double work as we already have the coordinates. (Can be improved)
  */
 function googleMapAddress(address) {
-    console.info(address);
     var geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(-34.397, 150.644);
     var myOptions = {
@@ -89,7 +88,6 @@ function googleMapAddress(address) {
         }
     var map = new google.maps.Map(document.getElementById("googleMapMedium"), myOptions);
     geocoder.geocode( { 'address': address}, function(results, status) {
-        console.info(status);
         if (status == google.maps.GeocoderStatus.OK) {
             console.dir(results[0].geometry.location);
             map.setCenter(results[0].geometry.location);

@@ -84,7 +84,7 @@ amISafeHere.controller('CityCtrl', function ($scope, $http) {
     $('#buttonGraphOneHundredThousandView').on('click', function (evt) {
         showOneHundredThousandGraph();
     });
-    
+
     /*
      * empty the graph.
      * reconstruct the graph
