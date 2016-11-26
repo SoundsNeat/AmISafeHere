@@ -1,18 +1,18 @@
 Overview:
 
 This is a project for CS-480: Software Engineering class by SoundsNeat team.
-======================
+############################
 
 Goal:
 
 The goal is to calculate the safety level of any city within United States.
-======================
+############################
 
 Name:
 
 Am I Safe Here?
 www.amisafehere.xyz
-======================
+############################
 
 Technologies:
 
@@ -32,7 +32,7 @@ Technologies:
 13. Google Map API to display the selected city.
 14. JUnit as Unit Tests
 15. http://www.city-data.com/ to get the crime statistics for selected cities
-======================
+############################
 
 Constraints:
 
@@ -50,7 +50,7 @@ Constraints:
     => Fix: Have a running list of different cities objects to replace with the correct name.
             Currently, it is a static List which needs to be redeployed whenever it is updated.
             It can be improved by reading from a file.
-======================
+############################
 
 Future Goals:
 
@@ -58,6 +58,6 @@ Future Goals:
 2. Use locality such as neighborhood as safety level of a city is a generalization when cities are too big.
 3. Add comparison feature to compare against other cities.
 4. Create a database and populate the data every month.
-======================
+############################
 
 
